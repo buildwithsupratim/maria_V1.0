@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🌈 Learn & Play!</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --pink:    #e91e8c;
+      --purple:  #7b1fa2;
+      --blue:    #1a237e;
+      --olive:   #6d8c3e;
+      --red:     #c62828;
+      --white:   #ffffff;
+      --cream:   #f4f0ff;
+      --dark:    #1a237e;
+      --shadow:  0 8px 32px rgba(26,35,126,.18);
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Nunito', sans-serif;
+      background: linear-gradient(135deg, #fce4ff 0%, #e8eeff 50%, #e8f5e9 100%);
+      overflow: hidden;
+    }
+
+    body::before {
+      content: '🌟🦋🎈🌸🎀🍭🌈🦄🎠🌟🎁🐾';
+      position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%;
+      font-size: 1.8rem; opacity: .06;
+      white-space: nowrap;
+      letter-spacing: 70px;
+      line-height: 110px;
+      pointer-events: none;
+      z-index: 0;
+      word-break: break-all;
+    }
+
+    #login-screen {
+      position: fixed; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      z-index: 10; padding: 1rem;
+    }
+
+    .login-card {
+      background: white; border-radius: 32px;
+      padding: 2.5rem 2rem; width: min(480px, 100%);
+      box-shadow: 0 20px 60px rgba(123,31,162,.22), 0 4px 16px rgba(0,0,0,.08);
+      border: 4px solid var(--purple); position: relative;
+      animation: popIn .6s cubic-bezier(.34,1.56,.64,1);
+    }
+    @keyframes popIn {
+      from { transform: scale(.7) translateY(40px); opacity: 0; }
+      to   { transform: scale(1) translateY(0);     opacity: 1; }
+    }
+
+    .login-deco {
+      position: absolute; top: -32px; left: 50%; transform: translateX(-50%);
+      font-size: 3.5rem; filter: drop-shadow(0 4px 8px rgba(0,0,0,.2));
+      animation: bounce 2s ease-in-out infinite;
+    }
+    @keyframes bounce {
+      0%,100% { transform: translateX(-50%) translateY(0); }
+      50%      { transform: translateX(-50%) translateY(-12px); }
+    }
+
+    .login-title {
+      font-family: 'Fredoka One', cursive; font-size: 2.2rem;
+      text-align: center; margin-top: .8rem;
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .login-subtitle { text-align: center; color: #888; font-size: .95rem; margin-bottom: 1.8rem; font-weight: 600; }
+    .field-label { font-weight: 800; font-size: 1rem; color: var(--dark); margin-bottom: .4rem; display: flex; align-items: center; gap: .4rem; }
+    .field-group { margin-bottom: 1.2rem; }
+
+    .fancy-input {
+      width: 100%; padding: .85rem 1.1rem; border-radius: 16px;
+      border: 3px solid #c5cae9; font-family: 'Nunito', sans-serif;
+      font-size: 1.05rem; font-weight: 700; color: var(--dark);
+      background: #f3f0ff; outline: none;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .fancy-input:focus { border-color: var(--purple); box-shadow: 0 0 0 4px rgba(123,31,162,.15); }
+
+    .cf-widget-wrap { margin: 1rem 0; display: flex; justify-content: center; }
+
+    .login-btn {
+      width: 100%; padding: 1rem; border-radius: 20px; border: none; cursor: pointer;
+      font-family: 'Fredoka One', cursive; font-size: 1.4rem; color: white;
+      background: linear-gradient(135deg, var(--blue), var(--purple));
+      box-shadow: 0 6px 20px rgba(26,35,126,.35);
+      transition: transform .15s, box-shadow .15s; letter-spacing: .5px;
+    }
+    .login-btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(26,35,126,.45); }
+    .login-btn:active:not(:disabled) { transform: translateY(0); }
+    .login-btn:disabled { opacity: .6; cursor: not-allowed; }
+
+    .login-error {
+      background: #ffebee; color: var(--red); border-radius: 12px;
+      padding: .7rem 1rem; font-weight: 700; font-size: .9rem;
+      margin-top: .8rem; display: none; border: 2px solid #ef9a9a;
+    }
+
+    #chat-screen { display: none; position: fixed; inset: 0; flex-direction: column; z-index: 5; }
+
+    .chat-header {
+      background: linear-gradient(135deg, var(--blue) 0%, var(--purple) 100%);
+      color: white; padding: .7rem 1.2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 1rem; box-shadow: 0 4px 16px rgba(26,35,126,.3);
+      flex-shrink: 0; flex-wrap: wrap; position: relative; z-index: 20;
+    }
+    .header-left { display: flex; align-items: center; gap: .8rem; }
+
+    .menu-btn {
+      background: rgba(255,255,255,.2); border: 2px solid rgba(255,255,255,.4);
+      border-radius: 12px; color: white; cursor: pointer;
+      width: 42px; height: 42px; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 5px;
+      padding: 0; flex-shrink: 0; transition: background .2s;
+    }
+    .menu-btn:hover { background: rgba(255,255,255,.32); }
+    .menu-btn span { display: block; width: 20px; height: 2.5px; background: white; border-radius: 2px; }
+
+    .header-info { display: flex; gap: .6rem; align-items: center; flex-wrap: wrap; }
+    .header-chip {
+      background: rgba(255,255,255,.2); border-radius: 20px; padding: .3rem .9rem;
+      font-weight: 800; font-size: .85rem; display: flex; align-items: center; gap: .3rem;
+      backdrop-filter: blur(4px); border: 1.5px solid rgba(255,255,255,.35);
+    }
+
+    /* ===== MUSIC INDICATOR ===== */
+    .music-indicator {
+      display: none; align-items: center; gap: .5rem;
+      background: rgba(255,255,255,.18);
+      border: 1.5px solid rgba(255,255,255,.35);
+      border-radius: 20px; padding: .28rem .85rem;
+      font-size: .8rem; font-weight: 700; color: rgba(255,255,255,.95);
+      backdrop-filter: blur(4px); letter-spacing: .2px;
+      animation: fadeInPop .3s ease;
+    }
+    .music-indicator.show { display: flex; }
+    @keyframes fadeInPop {
+      from { transform: scale(.8); opacity: 0; }
+      to   { transform: scale(1);  opacity: 1; }
+    }
+    .music-bars { display: flex; align-items: flex-end; gap: 2px; height: 14px; }
+    .music-bars span {
+      display: block; width: 3px; border-radius: 2px;
+      background: rgba(255,255,255,.9);
+      animation: musicBar 0.8s ease-in-out infinite alternate;
+    }
+    .music-bars span:nth-child(1) { height: 4px;  animation-delay: 0s;    animation-duration: 0.55s; }
+    .music-bars span:nth-child(2) { height: 12px; animation-delay: 0.12s; animation-duration: 0.85s; }
+    .music-bars span:nth-child(3) { height: 7px;  animation-delay: 0.27s; animation-duration: 0.65s; }
+    .music-bars span:nth-child(4) { height: 14px; animation-delay: 0.08s; animation-duration: 1.0s; }
+    .music-bars span:nth-child(5) { height: 5px;  animation-delay: 0.22s; animation-duration: 0.72s; }
+    @keyframes musicBar {
+      from { transform: scaleY(.25); }
+      to   { transform: scaleY(1);   }
+    }
+    /* ========================== */
+
+    .student-badge {
+      background: var(--pink); color: white; border-radius: 22px;
+      padding: .4rem 1.1rem; font-family: 'Fredoka One', cursive; font-size: 1.05rem;
+      display: flex; align-items: center; gap: .4rem;
+      box-shadow: 0 3px 10px rgba(0,0,0,.2); animation: wobble 3s ease-in-out infinite;
+    }
+    @keyframes wobble { 0%,100% { transform: rotate(-1deg); } 50% { transform: rotate(1deg); } }
+
+    .chat-body { display: flex; flex: 1; overflow: hidden; position: relative; }
+
+    .drawer-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(26,35,126,.45); z-index: 100;
+      backdrop-filter: blur(2px); animation: fadeIn .25s ease;
+    }
+    .drawer-overlay.open { display: block; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    .drawer {
+      position: fixed; top: 0; left: -320px; width: 300px; max-width: 85vw; height: 100%;
+      background: linear-gradient(180deg, #e8eeff 0%, #f3e5ff 60%, #e8f5e9 100%);
+      z-index: 110; display: flex; flex-direction: column;
+      box-shadow: 4px 0 24px rgba(26,35,126,.22);
+      transition: left .3s cubic-bezier(.4,0,.2,1); overflow: hidden;
+    }
+    .drawer.open { left: 0; }
+
+    .drawer-header {
+      background: linear-gradient(135deg, var(--blue), var(--purple));
+      color: white; padding: 1rem 1.2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-shrink: 0; gap: .8rem;
+    }
+    .drawer-title { font-family: 'Fredoka One', cursive; font-size: 1.25rem; display: flex; align-items: center; gap: .4rem; }
+    .drawer-close {
+      background: rgba(255,255,255,.2); border: none; color: white;
+      border-radius: 50%; width: 34px; height: 34px; font-size: 1.2rem;
+      cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background .2s;
+    }
+    .drawer-close:hover { background: rgba(255,255,255,.35); }
+    .drawer-body { flex: 1; overflow-y: auto; padding: 1rem .8rem; display: flex; flex-direction: column; gap: .7rem; }
+    .drawer-section-label {
+      font-family: 'Fredoka One', cursive; font-size: .9rem; color: var(--purple);
+      text-align: center; padding: .4rem 0 .6rem; border-bottom: 2px dashed var(--purple);
+      display: flex; align-items: center; gap: .4rem; justify-content: center;
+    }
+
+    .curr-card {
+      background: white; border-radius: 16px; padding: .85rem 1rem;
+      box-shadow: 0 3px 12px rgba(26,35,126,.09); border: 2.5px solid #c5cae9;
+      cursor: pointer; transition: transform .2s, border-color .2s, box-shadow .2s;
+      display: flex; align-items: flex-start; gap: .6rem;
+    }
+    .curr-card:hover { transform: translateY(-2px); border-color: var(--pink); box-shadow: 0 6px 20px rgba(233,30,140,.18); }
+    .curr-card:active { transform: scale(.97); }
+    .curr-card.active { border-color: var(--olive); background: linear-gradient(135deg, #f0fff4, #e8f5e9); box-shadow: 0 4px 16px rgba(109,140,62,.2); }
+
+    .curr-emoji { font-size: 1.4rem; flex-shrink: 0; margin-top: .1rem; }
+    .curr-content { flex: 1; min-width: 0; }
+    .curr-title { font-weight: 800; font-size: .88rem; color: var(--dark); line-height: 1.35; word-break: break-word; }
+    .curr-sub { font-size: .72rem; color: #888; font-weight: 600; margin-top: .25rem; }
+    .progress-bar-wrap { background: #e8eeff; border-radius: 10px; height: 8px; overflow: hidden; margin-top: .45rem; }
+    .progress-bar-fill { height: 100%; border-radius: 10px; transition: width .8s cubic-bezier(.34,1.56,.64,1); background: linear-gradient(90deg, var(--olive), var(--blue)); }
+    .progress-label { font-size: .7rem; font-weight: 700; display: flex; justify-content: space-between; align-items: center; margin-top: .3rem; color: #777; }
+    .stage-badge { border-radius: 10px; padding: .15rem .55rem; font-size: .68rem; font-weight: 800; letter-spacing: .3px; }
+    .stage-yet      { background: #ede7f6; color: var(--purple); }
+    .stage-progress { background: #fff3e0; color: #e65100; }
+    .stage-done     { background: #e8f5e9; color: var(--olive); }
+
+    .chat-area { flex: 1; display: flex; flex-direction: column; overflow: hidden; background: var(--cream); position: relative; }
+    .chat-area::before {
+      content: ''; position: absolute; inset: 0;
+      background-image:
+        radial-gradient(circle at 15% 20%, rgba(123,31,162,.05) 70px, transparent 70px),
+        radial-gradient(circle at 82% 72%, rgba(26,35,126,.05) 55px, transparent 55px),
+        radial-gradient(circle at 50% 50%, rgba(109,140,62,.04) 90px, transparent 90px);
+      pointer-events: none;
+    }
+
+    .messages-wrap { flex: 1; overflow-y: auto; padding: 1.2rem 1rem; display: flex; flex-direction: column; gap: .8rem; scroll-behavior: smooth; }
+
+    .msg { display: flex; align-items: flex-end; gap: .6rem; animation: slideUp .35s ease; max-width: 80%; }
+    @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    .msg-user   { align-self: flex-end; flex-direction: row-reverse; max-width: 82%; }
+    .msg-system { align-self: flex-start; max-width: 82%; }
+
+    .msg-avatar { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; box-shadow: 0 2px 8px rgba(0,0,0,.15); overflow: hidden; }
+    .avatar-user   { background: linear-gradient(135deg, var(--blue), var(--purple)); }
+    .avatar-system { background: linear-gradient(135deg, var(--olive), var(--blue)); }
+    .avatar-system img, .avatar-user img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+
+    .msg-bubble { padding: .75rem 1.1rem; border-radius: 20px; font-size: .95rem; font-weight: 600; line-height: 1.5; max-width: 100%; position: relative; }
+    .msg-user .msg-bubble { background: linear-gradient(135deg, var(--blue), var(--purple)); color: white; border-bottom-right-radius: 6px; box-shadow: 0 4px 14px rgba(26,35,126,.28); }
+    .msg-system .msg-bubble { background: white; color: var(--dark); border-bottom-left-radius: 6px; box-shadow: 0 4px 14px rgba(0,0,0,.09); border: 2px solid #c5cae9; }
+
+    .typing-indicator { display: none; align-self: flex-start; align-items: flex-end; gap: .6rem; }
+    .typing-indicator.show { display: flex; }
+    .typing-dots { background: white; border: 2px solid #c5cae9; border-radius: 20px; border-bottom-left-radius: 6px; padding: .7rem 1.1rem; display: flex; gap: 5px; align-items: center; box-shadow: 0 3px 10px rgba(0,0,0,.08); }
+    .typing-dots span { width: 8px; height: 8px; background: var(--purple); border-radius: 50%; display: inline-block; animation: typingBounce 1.2s ease-in-out infinite; }
+    .typing-dots span:nth-child(2) { animation-delay: .2s; }
+    .typing-dots span:nth-child(3) { animation-delay: .4s; }
+    @keyframes typingBounce { 0%,60%,100% { transform: translateY(0); } 30% { transform: translateY(-8px); } }
+
+    .input-bar { padding: .8rem 1rem; background: white; border-top: 3px solid #c5cae9; display: flex; gap: .6rem; align-items: flex-end; box-shadow: 0 -4px 16px rgba(26,35,126,.07); flex-shrink: 0; }
+
+    .input-textarea { flex: 1; resize: none; border: 3px solid #c5cae9; border-radius: 18px; padding: .7rem 1rem; font-family: 'Nunito', sans-serif; font-size: .95rem; font-weight: 700; color: var(--dark); background: #f3f0ff; outline: none; max-height: 120px; transition: border-color .2s; line-height: 1.4; }
+    .input-textarea:focus { border-color: var(--purple); box-shadow: 0 0 0 3px rgba(123,31,162,.12); }
+    .input-textarea:disabled { opacity: .5; cursor: not-allowed; }
+
+    .word-count { font-size: .72rem; font-weight: 700; color: #bbb; text-align: right; margin-top: .2rem; padding-right: .3rem; }
+    .word-count.warn { color: var(--red); }
+    .input-col { flex: 1; display: flex; flex-direction: column; }
+
+    .icon-btn { width: 46px; height: 46px; border-radius: 50%; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; transition: transform .15s, box-shadow .15s; flex-shrink: 0; }
+    .icon-btn:hover:not(:disabled) { transform: scale(1.1); }
+    .icon-btn:disabled { opacity: .45; cursor: not-allowed; }
+
+    .btn-voice { background: linear-gradient(135deg, var(--olive), #388e3c); color: white; box-shadow: 0 4px 14px rgba(109,140,62,.35); }
+    .btn-voice.recording { background: linear-gradient(135deg, var(--red), #e53935); animation: pulse 1s ease-in-out infinite; box-shadow: 0 4px 14px rgba(198,40,40,.5); }
+    @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.12); } }
+    .btn-send { background: linear-gradient(135deg, var(--pink), var(--purple)); color: white; box-shadow: 0 4px 14px rgba(123,31,162,.35); }
+
+    .messages-wrap::-webkit-scrollbar, .drawer-body::-webkit-scrollbar { width: 6px; }
+    .messages-wrap::-webkit-scrollbar-track, .drawer-body::-webkit-scrollbar-track { background: transparent; }
+    .messages-wrap::-webkit-scrollbar-thumb { background: rgba(123,31,162,.28); border-radius: 3px; }
+    .drawer-body::-webkit-scrollbar-thumb { background: rgba(26,35,126,.22); border-radius: 3px; }
+
+    .spinner { display: inline-block; width: 20px; height: 20px; border: 3px solid rgba(255,255,255,.4); border-top-color: white; border-radius: 50%; animation: spin .7s linear infinite; vertical-align: middle; margin-right: .4rem; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    @media (max-width: 640px) {
+      .header-chip { font-size: .75rem; padding: .25rem .65rem; }
+      .student-badge { font-size: .9rem; padding: .35rem .85rem; }
+      .msg { max-width: 90%; }
+      .msg-user, .msg-system { max-width: 90%; }
+      .drawer { width: 280px; }
+      .music-indicator { font-size: .72rem; padding: .22rem .6rem; }
+    }
+    @media (max-width: 380px) {
+      .header-chip:not(:first-child) { display: none; }
+      .music-indicator { display: none !important; }
+    }
+    /* ===== TYPING FUN TEXT ===== */
+.typing-dots-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.typing-text {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--purple);
+  animation: fadeText 0.5s ease;
+  max-width: 220px;
+  line-height: 1.2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap; /* important for ellipsis to work */
+}
+
+@keyframes fadeText {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+  </style>
+</head>
+<body>
+
+<!-- LOGIN SCREEN -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-deco">🎒</div>
+    <h1 class="login-title">Learn with Maria! 🌈</h1>
+    <p class="login-subtitle">Let's start today's adventure! 🦋✨</p>
+
+    <div class="field-group">
+      <div class="field-label">🔑 Lesson Code</div>
+      <input class="fancy-input" id="lesson-code" type="text"
+             placeholder="Enter your lesson code… 🎯" autocomplete="off" />
+    </div>
+
+    <div class="field-group">
+      <div class="field-label">🌟 Your Name</div>
+      <input class="fancy-input" id="student-name-input" type="text"
+             placeholder="What's your name? 😊" autocomplete="off" />
+    </div>
+
+    <div class="cf-widget-wrap">
+      <div id="cf-turnstile-widget"></div>
+    </div>
+
+    <button class="login-btn" id="login-btn" onclick="handleLogin()">
+      🚀 Let's Go! 🎉
+    </button>
+    <div class="login-error" id="login-error"></div>
+  </div>
+</div>
+
+<!-- DRAWER OVERLAY -->
+<div class="drawer-overlay" id="drawer-overlay" onclick="closeDrawer()"></div>
+
+<!-- LEFT DRAWER -->
+<div class="drawer" id="curriculum-drawer">
+  <div class="drawer-header">
+    <div class="drawer-title">📚 My Learning Path 🌟</div>
+    <button class="drawer-close" onclick="closeDrawer()" title="Close">✕</button>
+  </div>
+  <div class="drawer-body">
+    <div class="drawer-section-label">🎯 Click a topic to explore it! 🚀</div>
+    <div id="curriculum-list"></div>
+  </div>
+</div>
+
+<!-- CHAT SCREEN -->
+<div id="chat-screen">
+
+  <div class="chat-header">
+    <div class="header-left">
+      <button class="menu-btn" id="menu-btn" onclick="openDrawer()" title="Open curriculum menu">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="header-info">
+        <div class="header-chip">📚 <span id="hdr-board">—</span></div>
+        <div class="header-chip">🏫 <span id="hdr-class">—</span></div>
+        <div class="header-chip">📖 <span id="hdr-subject">—</span></div>
+      </div>
+    </div>
+
+    <!-- ★ Music now-playing badge — visible only while teacher is thinking ★ -->
+    <div class="music-indicator" id="music-indicator">
+      <div class="music-bars">
+        <span></span><span></span><span></span><span></span><span></span>
+      </div>
+      🎵 Maria is Thinking…
+    </div>
+
+    <div class="student-badge">
+      🌟 <span id="hdr-student">—</span>'s Session
+    </div>
+  </div>
+
+  <div class="chat-body">
+    <div class="chat-area">
+      <div class="messages-wrap" id="messages-wrap">
+
+        <div class="msg msg-system">
+          <div class="msg-avatar avatar-system">
+            <img id="teacher-avatar-img"
+                 src="https://raw.githubusercontent.com/buildwithsupratim/maria_V1.0/main/Picture_Teacher.jpg"
+                 alt="Teacher Maria"
+                 onerror="this.style.display='none'; this.parentElement.textContent='👩‍🏫';" />
+          </div>
+          <div class="msg-bubble" id="welcome-bubble">
+            Hi! I'm your Maria! 😊 Type your first message below to get started! 🎉🦋
+          </div>
+        </div>
+
+        <div class="typing-indicator" id="typing-indicator">
+          <div class="msg-avatar avatar-system">
+            <img src="https://raw.githubusercontent.com/buildwithsupratim/maria_V1.0/main/Picture_Teacher.jpg"
+                 alt="Teacher Maria"
+                 onerror="this.style.display='none'; this.parentElement.textContent='👩‍🏫';" />
+          </div>
+          <div class="typing-dots-wrap">
+            <div class="typing-dots"><span></span><span></span><span></span></div>
+            <div class="typing-text" id="typing-text">Maria is typing…</div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="input-bar">
+        <div class="input-col">
+          <textarea class="input-textarea" id="msg-input"
+                    rows="1" placeholder="Type your message here… 💬🌈"
+                    oninput="onInputChange(this)" onkeydown="onInputKeydown(event)"></textarea>
+          <div class="word-count" id="word-count">0 / 100 words</div>
+        </div>
+        <button class="icon-btn btn-voice" id="voice-btn" onclick="toggleVoice()" title="Voice input">🎤</button>
+        <button class="icon-btn btn-send" id="send-btn" onclick="sendMessage()" title="Send message">➤</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+const _0x361b6a=_0x1810;(function(_0x4c6b85,_0x475bde){const _0x323677=_0x1810,_0x3c3a04=_0x4c6b85();while(!![]){try{const _0x753584=parseInt(_0x323677(0x215))/0x1+parseInt(_0x323677(0x1df))/0x2+parseInt(_0x323677(0x1c2))/0x3+-parseInt(_0x323677(0x1b4))/0x4*(-parseInt(_0x323677(0x24c))/0x5)+-parseInt(_0x323677(0x1d0))/0x6+parseInt(_0x323677(0x20f))/0x7*(-parseInt(_0x323677(0x1e7))/0x8)+-parseInt(_0x323677(0x271))/0x9*(-parseInt(_0x323677(0x203))/0xa);if(_0x753584===_0x475bde)break;else _0x3c3a04['push'](_0x3c3a04['shift']());}catch(_0x55bfa8){_0x3c3a04['push'](_0x3c3a04['shift']());}}}(_0x12d8,0x4bc90));const hostOK=location[_0x361b6a(0x1fd)]===_0x361b6a(0x22c),pathOK=location[_0x361b6a(0x1fc)][_0x361b6a(0x1ff)](_0x361b6a(0x217));if(!hostOK||!pathOK)throw new Error('');const ENV=_0x361b6a(0x1f2),API1_URL=_0x361b6a(0x1e9),API2_URL='https://digifreely-chatnew.hf.space/chat',API3_URL='https://digifreely-chatnew.hf.space/dataset',GA_MEASUREMENT_ID=_0x361b6a(0x1f7),CF_TURNSTILE_SITE_KEY='0x4AAAAAAC1eARqwmPRQbbMJ',TEST_AUTH_CODE='',TEACHER_PHOTO_URL=_0x361b6a(0x220),STUDENT_PHOTO_URL=_0x361b6a(0x1ad),TYPING_MUSIC_URL=_0x361b6a(0x232),typingMusic=new Audio(TYPING_MUSIC_URL);typingMusic[_0x361b6a(0x258)]=!![],typingMusic['volume']=0.35;let musicFadeTimer=null;function startTypingMusic(){const _0xc75bd9=_0x361b6a;musicFadeTimer&&(clearInterval(musicFadeTimer),musicFadeTimer=null),typingMusic[_0xc75bd9(0x1f9)]=0.35,typingMusic[_0xc75bd9(0x242)]=0x0,typingMusic['play']()[_0xc75bd9(0x1e2)](_0x2cf0ae=>console[_0xc75bd9(0x239)](_0xc75bd9(0x1d7),_0x2cf0ae['message'])),document['getElementById'](_0xc75bd9(0x1bb))[_0xc75bd9(0x1e3)][_0xc75bd9(0x1b0)](_0xc75bd9(0x1b6));}function stopTypingMusic(){const _0x317ca6=_0x361b6a;document[_0x317ca6(0x1d9)](_0x317ca6(0x1bb))[_0x317ca6(0x1e3)][_0x317ca6(0x265)](_0x317ca6(0x1b6));const _0x1d8934=0.35,_0x423527=0x19,_0x44b35e=0x2bc/_0x423527;let _0x36c61e=0x0;musicFadeTimer=setInterval(()=>{const _0x5b05a8=_0x317ca6;_0x36c61e++,typingMusic[_0x5b05a8(0x1f9)]=Math[_0x5b05a8(0x256)](0x0,_0x1d8934*(0x1-_0x36c61e/_0x423527)),_0x36c61e>=_0x423527&&(clearInterval(musicFadeTimer),musicFadeTimer=null,typingMusic['pause'](),typingMusic[_0x5b05a8(0x242)]=0x0,typingMusic['volume']=_0x1d8934);},_0x44b35e);}function _0x12d8(){const _0x442518=['Topic\x20','login-btn','!\x20👋\x20I\x27m\x20your\x20teacher\x20today!\x20😊\x20','175244lanQVm','name','show','#cf-turnstile-widget','scratchpad','query','hdr-subject','music-indicator','light','learning_objectives','async','onend','learning_path','clientX','48870yqrYsy','addEventListener','innerHTML','json','lesson-code','stage-yet','en-US','class','re_teach','display','text','Please\x20tell\x20us\x20your\x20name!\x20🌟','🔥\x20In\x20Progress','scrollTop','3620172HvxVNC','user','log','config','teach','onended','charCodeAt','[Music]\x20Autoplay\x20blocked\x20(requires\x20prior\x20user\x20gesture):','audio/wav','getElementById','Oops!\x20Something\x20went\x20wrong\x20😢\x20','stringify','toLowerCase','https://www.googletagmanager.com/gtag/js?id=','focus','1216350Oqslfk','toggle','current_learning','catch','classList','style','.avatar-system\x20img','student-name-input','64nrhUgB','curriculum-drawer','https://digifreely-init.hf.space/base_start','recording','&quot;','Tap\x20the\x20☰\x20menu\x20to\x20pick\x20a\x20topic,\x20or\x20just\x20type\x20below!\x20🎉🌈','sub','https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback','stage-progress','audio/mpeg','Hi\x20','PROD','goal','\x22\x20alt=\x22Teacher\x20Maria\x22\x20onerror=\x22this.style.display=\x27none\x27;this.parentElement.textContent=\x27👩‍🏫\x27;\x22\x20/>\x0a\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20<div\x20class=\x22msg-bubble\x22>','msg-input','complete','G-03K3WT21HP','.cf-widget-wrap','volume','title','disabled','pathname','hostname','block','startsWith','Turnstile:','SpeechRecognition','POST','3450VVkShv','auto','DOMContentLoaded','subject','touches','something\x20amazing','keydown','🚀\x20Let\x27s\x20Go!\x20🎉','flex','hdr-student','TEST','error','289870rhEuVH','results','assessment_stages','body','stage-done','\x20words','98616knNKdC','querySelectorAll','/maria_V1.0','msg\x20msg-','curriculum-list','overflow','height','chat_message','content','chat_history','messages-wrap','https://raw.githubusercontent.com/buildwithsupratim/maria_V1.0/main/Picture_Teacher.jpg','audio_output','\x0a\x20\x20\x20\x20\x20\x20<div\x20class=\x22msg-avatar\x20avatar-system\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<img\x20src=\x22','word-count','length','chat-screen','stop','board','active','push','shiftKey','replace','buildwithsupratim.github.io','transcript','open','\x20/\x20','start','application/json','https://raw.githubusercontent.com/buildwithsupratim/maria_V1.0/main/The_Moon_s_Slow_Turn.mp3','getResponse','system_output','[Dataset]','charAt','Dataset\x20error:\x20','split','warn','div','render','object','script','round','querySelector','webkitSpeechRecognition','continuous','currentTime','defer','SUQz','toUpperCase','isFinal','⚠️\x20','%\x20done</span><span\x20class=\x22stage-badge\x20','Please\x20complete\x20the\x20security\x20check\x20first!\x20🛡️','hdr-board','⏳\x20Not\x20Started','10cpIrOl','status','Stop\x20recording','key','message','description','%\x22></div></div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22progress-label\x22><span>','none','interimResults','login-screen','max','className','loop','welcome-bubble','//s','login-error','appendChild','forEach','system','drawer-overlay','head','insertBefore','assess','&amp;','<br>','remove','Please\x20enter\x20your\x20Lesson\x20Code!\x20🔑','Unexpected\x20response\x20from\x20server.','</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20','student_name','\x20active','dataLayer','textContent','onerror','src','scrollHeight','show_and_tell','11331RKTGFI','onclick','curr-card','&lt;','hdr-class','voice-btn','min','typing-indicator','slice','createElement','resultIndex','Speech:','hidden','curriculum_objectives','\x0a\x20\x20\x20\x20\x20\x20<div\x20class=\x22curr-emoji\x22>','teacher_persona','</div>\x0a\x20\x20\x20\x20\x20\x20<div\x20class=\x22curr-content\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22curr-title\x22>','trim','topic','value','response_message','Enter','Server\x20error:\x20','Let\x27s\x20learn\x20about\x20','gtag','</div>','</span></div>\x0a\x20\x20\x20\x20\x20\x20</div>','user_input','\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22progress-bar-wrap\x22><div\x20class=\x22progress-bar-fill\x22\x20style=\x22width:','<div\x20style=\x22text-align:center;color:#aaa;font-size:.9rem;padding:1rem\x22>📭\x20No\x20topics\x20yet!<br>Start\x20chatting\x20to\x20begin!\x20🌱</div>','auth_code','https://raw.githubusercontent.com/buildwithsupratim/maria_V1.0/main/Picture_Student.jpg','play','load','add'];_0x12d8=function(){return _0x442518;};return _0x12d8();}function getHeaders(){const _0x663cb2=_0x361b6a,_0x4d1056={'Content-Type':_0x663cb2(0x231)};if(ENV===_0x663cb2(0x20d))_0x4d1056[_0x663cb2(0x1ac)]=TEST_AUTH_CODE;return _0x4d1056;}ENV===_0x361b6a(0x1f2)?(function(){const _0x5567a1=_0x361b6a,_0x2cde4b=document[_0x5567a1(0x27a)](_0x5567a1(0x23d));_0x2cde4b[_0x5567a1(0x1be)]=!![],_0x2cde4b['src']=_0x5567a1(0x1dd)+GA_MEASUREMENT_ID,document[_0x5567a1(0x260)]['appendChild'](_0x2cde4b),window[_0x5567a1(0x26b)]=window[_0x5567a1(0x26b)]||[];function _0x36ae8e(){const _0x43137f=_0x5567a1;dataLayer[_0x43137f(0x229)](arguments);}window[_0x5567a1(0x289)]=_0x36ae8e,_0x36ae8e('js',new Date()),_0x36ae8e(_0x5567a1(0x1d3),GA_MEASUREMENT_ID);}()):window['gtag']=function(){};function _0x1810(_0x4ce85c,_0x2a70c4){_0x4ce85c=_0x4ce85c-0x1ab;const _0x12d891=_0x12d8();let _0x181003=_0x12d891[_0x4ce85c];return _0x181003;}let learningPath=null,isProcessing=![],recognition=null,isRecording=![],activeCurrIdx=-0x1;const MAX_WORDS=0x64;function onloadTurnstileCallback(){const _0x407ae9=_0x361b6a;turnstile[_0x407ae9(0x23b)](_0x407ae9(0x1b7),{'sitekey':CF_TURNSTILE_SITE_KEY,'theme':_0x407ae9(0x1bc),'callback':()=>{}});}ENV===_0x361b6a(0x1f2)?(function(){const _0x3fc043=_0x361b6a,_0x1aa3ac=document[_0x3fc043(0x27a)](_0x3fc043(0x23d));_0x1aa3ac['src']=_0x3fc043(0x1ee),_0x1aa3ac['async']=!![],_0x1aa3ac[_0x3fc043(0x243)]=!![],document['head'][_0x3fc043(0x25c)](_0x1aa3ac);}()):document[_0x361b6a(0x1c3)]('DOMContentLoaded',()=>{const _0x3b2073=_0x361b6a,_0x5c4729=document[_0x3b2073(0x23f)](_0x3b2073(0x1f8));if(_0x5c4729)_0x5c4729[_0x3b2073(0x1e4)][_0x3b2073(0x1cb)]=_0x3b2073(0x253);});async function handleLogin(){const _0x2fcac0=_0x361b6a,_0x5c0257=document[_0x2fcac0(0x1d9)](_0x2fcac0(0x1c6))[_0x2fcac0(0x284)][_0x2fcac0(0x282)](),_0x505dd2=document[_0x2fcac0(0x1d9)](_0x2fcac0(0x1e6))[_0x2fcac0(0x284)][_0x2fcac0(0x282)](),_0x2339c0=document[_0x2fcac0(0x1d9)](_0x2fcac0(0x25b)),_0xbb648c=document[_0x2fcac0(0x1d9)](_0x2fcac0(0x1b2));_0x2339c0['style'][_0x2fcac0(0x1cb)]='none';if(!_0x5c0257){showLoginError(_0x2fcac0(0x266));return;}if(!_0x505dd2){showLoginError(_0x2fcac0(0x1cd));return;}if(ENV==='PROD')try{const _0x4f5a40=turnstile[_0x2fcac0(0x233)]();if(!_0x4f5a40){showLoginError(_0x2fcac0(0x249));return;}}catch(_0x470894){console[_0x2fcac0(0x239)](_0x2fcac0(0x200),_0x470894['message']);}_0xbb648c[_0x2fcac0(0x1fb)]=!![],_0xbb648c[_0x2fcac0(0x1c4)]='<span\x20class=\x22spinner\x22></span>\x20Loading…\x20🌟',typingMusic[_0x2fcac0(0x1af)]();try{const _0x7d2bc4=await fetch(API1_URL,{'method':_0x2fcac0(0x202),'headers':getHeaders(),'body':JSON[_0x2fcac0(0x1db)]({'request':_0x5c0257,'student_name':_0x505dd2})});if(!_0x7d2bc4['ok'])throw new Error(_0x2fcac0(0x287)+_0x7d2bc4['status']);const _0x1aa5be=await _0x7d2bc4['json']();if(!_0x1aa5be||!_0x1aa5be['learning_path'])throw new Error(_0x2fcac0(0x267));learningPath=_0x1aa5be[_0x2fcac0(0x1c0)];const _0x249c0b=await fetch(API3_URL,{'method':'POST','headers':getHeaders(),'body':JSON[_0x2fcac0(0x1db)]({'board':learningPath['board'],'class':learningPath['class'],'subject':learningPath[_0x2fcac0(0x206)]})});if(!_0x249c0b['ok'])throw new Error(_0x2fcac0(0x237)+_0x249c0b[_0x2fcac0(0x24d)]);const _0x5c4d57=await _0x249c0b[_0x2fcac0(0x1c5)]();console[_0x2fcac0(0x1d2)](_0x2fcac0(0x235),_0x5c4d57[_0x2fcac0(0x24d)],'-',_0x5c4d57['message']),gtag('event','lesson_start',{'student_name':_0x505dd2,'lesson_code':_0x5c0257}),initChatScreen();}catch(_0x1113ba){showLoginError(_0x2fcac0(0x1da)+_0x1113ba[_0x2fcac0(0x250)]),_0xbb648c[_0x2fcac0(0x1fb)]=![],_0xbb648c[_0x2fcac0(0x1c4)]=_0x2fcac0(0x20a);if(ENV===_0x2fcac0(0x1f2))try{turnstile['reset']();}catch(_0x42df2c){}}}function showLoginError(_0x11b15a){const _0x7e8ef3=_0x361b6a,_0x1b0273=document[_0x7e8ef3(0x1d9)](_0x7e8ef3(0x25b));_0x1b0273['textContent']=_0x7e8ef3(0x247)+_0x11b15a,_0x1b0273[_0x7e8ef3(0x1e4)][_0x7e8ef3(0x1cb)]=_0x7e8ef3(0x1fe);}document[_0x361b6a(0x1c3)](_0x361b6a(0x205),()=>{const _0x393507=_0x361b6a;[_0x393507(0x1c6),_0x393507(0x1e6)][_0x393507(0x25d)](_0x4a4647=>document[_0x393507(0x1d9)](_0x4a4647)[_0x393507(0x1c3)](_0x393507(0x209),_0x2ef12c=>{const _0x510823=_0x393507;if(_0x2ef12c[_0x510823(0x24f)]===_0x510823(0x286))handleLogin();}));});function initChatScreen(){const _0x5cb262=_0x361b6a,_0x39c2cf=learningPath;document[_0x5cb262(0x1d9)](_0x5cb262(0x24a))[_0x5cb262(0x26c)]=_0x39c2cf[_0x5cb262(0x227)]||'—',document[_0x5cb262(0x1d9)](_0x5cb262(0x275))[_0x5cb262(0x26c)]=_0x39c2cf['class']||'—',document[_0x5cb262(0x1d9)](_0x5cb262(0x1ba))[_0x5cb262(0x26c)]=(_0x39c2cf['subject']||'—')[_0x5cb262(0x236)](0x0)[_0x5cb262(0x245)]()+(_0x39c2cf[_0x5cb262(0x206)]||'')[_0x5cb262(0x279)](0x1),document[_0x5cb262(0x1d9)](_0x5cb262(0x20c))[_0x5cb262(0x26c)]=_0x39c2cf[_0x5cb262(0x269)]||'—',document[_0x5cb262(0x1d9)](_0x5cb262(0x259))[_0x5cb262(0x26c)]=_0x5cb262(0x1f1)+_0x39c2cf['student_name']+_0x5cb262(0x1b3)+(_0x5cb262(0x288)+(_0x39c2cf[_0x5cb262(0x206)]||_0x5cb262(0x208))+'!\x20')+_0x5cb262(0x1ec),document[_0x5cb262(0x216)](_0x5cb262(0x1e5))[_0x5cb262(0x25d)](_0x47e42f=>{const _0x4ff52d=_0x5cb262;_0x47e42f[_0x4ff52d(0x26e)]=TEACHER_PHOTO_URL;}),buildCurriculum(),document['getElementById'](_0x5cb262(0x255))[_0x5cb262(0x1e4)]['display']='none',document[_0x5cb262(0x1d9)](_0x5cb262(0x225))[_0x5cb262(0x1e4)][_0x5cb262(0x1cb)]=_0x5cb262(0x20b),_0x39c2cf[_0x5cb262(0x21e)]&&_0x39c2cf[_0x5cb262(0x21e)][_0x5cb262(0x224)]&&_0x39c2cf['chat_history'][_0x5cb262(0x25d)](_0x20fd3e=>{const _0x46f517=_0x5cb262;appendMessage('user',_0x20fd3e[_0x46f517(0x28c)]),appendMessage(_0x46f517(0x25e),_0x20fd3e[_0x46f517(0x234)]);}),document[_0x5cb262(0x1d9)](_0x5cb262(0x1f5))[_0x5cb262(0x1de)]();}function openDrawer(){const _0x1dc46e=_0x361b6a;document[_0x1dc46e(0x1d9)](_0x1dc46e(0x1e8))[_0x1dc46e(0x1e3)][_0x1dc46e(0x1b0)](_0x1dc46e(0x22e)),document[_0x1dc46e(0x1d9)](_0x1dc46e(0x25f))[_0x1dc46e(0x1e3)]['add']('open'),document[_0x1dc46e(0x212)][_0x1dc46e(0x1e4)][_0x1dc46e(0x21a)]=_0x1dc46e(0x27d);}function closeDrawer(){const _0x28c030=_0x361b6a;document[_0x28c030(0x1d9)](_0x28c030(0x1e8))[_0x28c030(0x1e3)]['remove'](_0x28c030(0x22e)),document['getElementById'](_0x28c030(0x25f))['classList']['remove'](_0x28c030(0x22e)),document[_0x28c030(0x212)][_0x28c030(0x1e4)][_0x28c030(0x21a)]='';}(function(){const _0x48866e=_0x361b6a;let _0xd797ea=0x0;document[_0x48866e(0x1d9)](_0x48866e(0x1e8))[_0x48866e(0x1c3)]('touchstart',_0x3a29d2=>{const _0x11e17f=_0x48866e;_0xd797ea=_0x3a29d2[_0x11e17f(0x207)][0x0]['clientX'];},{'passive':!![]}),document[_0x48866e(0x1d9)](_0x48866e(0x1e8))['addEventListener']('touchend',_0x478bce=>{const _0x1a6f26=_0x48866e;if(_0x478bce['changedTouches'][0x0][_0x1a6f26(0x1c1)]-_0xd797ea<-0x3c)closeDrawer();},{'passive':!![]});}());function buildCurriculum(){const _0x29fe0d=_0x361b6a,_0x37e157=document['getElementById'](_0x29fe0d(0x219));_0x37e157[_0x29fe0d(0x1c4)]='';if(!learningPath)return;const _0x570186=learningPath[_0x29fe0d(0x27e)]||[],_0x5926d8=(learningPath[_0x29fe0d(0x211)]||{})[_0x29fe0d(0x1e1)]||[],_0x26ebd4=_0x570186[_0x29fe0d(0x224)]?_0x570186:_0x5926d8;if(!_0x26ebd4[_0x29fe0d(0x224)]){_0x37e157[_0x29fe0d(0x1c4)]=_0x29fe0d(0x1ab);return;}_0x26ebd4[_0x29fe0d(0x25d)]((_0x244f9a,_0x3029fe)=>{const _0x29f729=_0x29fe0d,_0xbfb40c=typeof _0x244f9a===_0x29f729(0x23c)&&_0x244f9a!==null,_0x45afd7=_0xbfb40c?_0x244f9a[_0x29f729(0x283)]||_0x244f9a[_0x29f729(0x21d)]||_0x244f9a[_0x29f729(0x1f3)]||_0x244f9a[_0x29f729(0x1b5)]||_0x29f729(0x1b1)+(_0x3029fe+0x1):String(_0x244f9a),_0x575b69=_0xbfb40c?_0x244f9a[_0x29f729(0x251)]||_0x244f9a[_0x29f729(0x1ed)]||'':'';let _0x3b27bd=0x0;if(_0xbfb40c&&_0x244f9a[_0x29f729(0x1bd)]){const {pct:_0x33d476}=calcProgress(_0x244f9a[_0x29f729(0x1bd)]);_0x3b27bd=_0x33d476;}else{if(_0xbfb40c&&_0x5926d8[_0x3029fe]){const {pct:_0x26a9fc}=calcProgress(_0x5926d8[_0x3029fe][_0x29f729(0x1bd)]||[]);_0x3b27bd=_0x26a9fc;}}const {label:_0x2580bd,cls:_0x5d18ed}=stageStatus(_0x3b27bd),_0x44202b=document[_0x29f729(0x27a)](_0x29f729(0x23a));_0x44202b[_0x29f729(0x257)]=_0x29f729(0x273)+(_0x3029fe===activeCurrIdx?_0x29f729(0x26a):''),_0x44202b['id']='curr-card-'+_0x3029fe,_0x44202b[_0x29f729(0x272)]=()=>selectCurriculum(_0x3029fe,_0x45afd7),_0x44202b[_0x29f729(0x1c4)]=_0x29f729(0x27f)+currEmoji(_0x3029fe)+_0x29f729(0x281)+escapeHtml(_0x45afd7)+_0x29f729(0x268)+(_0x575b69?'<div\x20class=\x22curr-sub\x22>'+escapeHtml(_0x575b69)+_0x29f729(0x28a):'')+_0x29f729(0x28d)+_0x3b27bd+_0x29f729(0x252)+_0x3b27bd+_0x29f729(0x248)+_0x5d18ed+'\x22>'+_0x2580bd+_0x29f729(0x28b),_0x37e157[_0x29f729(0x25c)](_0x44202b);});}function selectCurriculum(_0x237681,_0xd34da0){const _0x406053=_0x361b6a;document[_0x406053(0x216)]('.curr-card')[_0x406053(0x25d)]((_0x4d62d5,_0x2e0d35)=>_0x4d62d5['classList']['toggle'](_0x406053(0x228),_0x2e0d35===_0x237681)),activeCurrIdx=_0x237681,closeDrawer();const _0x5742f2='I\x20want\x20to\x20learn\x20about:\x20'+_0xd34da0,_0x4d2161=document['getElementById'](_0x406053(0x1f5));_0x4d2161[_0x406053(0x284)]=_0x5742f2,updateWordCount(_0x5742f2),autoResizeTextarea(_0x4d2161),_0x4d2161[_0x406053(0x1de)](),sendMessage();}function calcProgress(_0x53c101){const _0x459d66=_0x361b6a,_0x207990=[_0x459d66(0x1d4),_0x459d66(0x1ca),_0x459d66(0x270),_0x459d66(0x262)];let _0x3944e5=0x0,_0xd9ccb5=_0x53c101[_0x459d66(0x224)]*0x4;return _0x53c101[_0x459d66(0x25d)](_0x4ddf04=>_0x207990[_0x459d66(0x25d)](_0x211a9c=>{const _0x3d038c=_0x459d66;if((_0x4ddf04[_0x211a9c]||'')[_0x3d038c(0x1dc)]()===_0x3d038c(0x1f6))_0x3944e5++;})),{'pct':_0xd9ccb5===0x0?0x0:Math[_0x459d66(0x23e)](_0x3944e5/_0xd9ccb5*0x64)};}function stageStatus(_0x36cec8){const _0x2b6c2f=_0x361b6a;if(_0x36cec8===0x0)return{'label':_0x2b6c2f(0x24b),'cls':_0x2b6c2f(0x1c7)};if(_0x36cec8<0x64)return{'label':_0x2b6c2f(0x1ce),'cls':_0x2b6c2f(0x1ef)};return{'label':'✅\x20Completed','cls':_0x2b6c2f(0x213)};}function currEmoji(_0x1c86c0){return['🌱','🌟','🎯','🚀','💡','🎨','🌈','🧩','🦋','🐾','🎠','🍀','🎁','🌸','🦄'][_0x1c86c0%0xf];}async function sendMessage(){const _0x18bbe7=_0x361b6a,_0x15aa8b=document['getElementById']('msg-input'),_0x119a53=_0x15aa8b['value'][_0x18bbe7(0x282)]();if(!_0x119a53||isProcessing)return;if(countWords(_0x119a53)>MAX_WORDS){alert('Whoa!\x20That\x27s\x20too\x20long.\x20Please\x20keep\x20it\x20under\x20100\x20words\x20😊');return;}if(isRecording)stopVoice();appendMessage(_0x18bbe7(0x1d1),_0x119a53),_0x15aa8b[_0x18bbe7(0x284)]='',updateWordCount(''),autoResizeTextarea(_0x15aa8b),setProcessing(!![]);try{const _0x18df69=await fetch(API2_URL,{'method':_0x18bbe7(0x202),'headers':getHeaders(),'body':JSON[_0x18bbe7(0x1db)](buildAPI2Request(_0x119a53))});if(!_0x18df69['ok'])throw new Error(_0x18bbe7(0x287)+_0x18df69[_0x18bbe7(0x24d)]);const _0x397165=await _0x18df69[_0x18bbe7(0x1c5)]();_0x397165['learning_path']&&(learningPath=_0x397165[_0x18bbe7(0x1c0)],buildCurriculum());const _0x310514=_0x397165[_0x18bbe7(0x1b9)]&&_0x397165[_0x18bbe7(0x1b9)][_0x18bbe7(0x285)]||{};if(_0x310514[_0x18bbe7(0x1cc)])appendMessage(_0x18bbe7(0x25e),_0x310514['text']);if(_0x310514[_0x18bbe7(0x221)])playBase64Audio(_0x310514['audio_output']);gtag('event',_0x18bbe7(0x21c),{'lesson':learningPath[_0x18bbe7(0x206)]});}catch(_0x9c1a8c){appendMessage('system','Oops!\x20I\x20couldn\x27t\x20hear\x20that\x20😢\x20Please\x20try\x20again!\x20('+_0x9c1a8c[_0x18bbe7(0x250)]+')');}finally{setProcessing(![]);}}function buildAPI2Request(_0x36e3ec){const _0x5d2614=_0x361b6a,_0x2fba9f=learningPath;return{'learning_path':{'board':_0x2fba9f[_0x5d2614(0x227)],'class':_0x2fba9f[_0x5d2614(0x1c9)],'subject':_0x2fba9f[_0x5d2614(0x206)],'student_name':_0x2fba9f[_0x5d2614(0x269)],'teacher_persona':_0x2fba9f[_0x5d2614(0x280)],'curriculum_objectives':_0x2fba9f[_0x5d2614(0x27e)]||[],'chat_history':_0x2fba9f[_0x5d2614(0x21e)]||[],'scratchpad':_0x2fba9f[_0x5d2614(0x1b8)]||[],'assessment_stages':_0x2fba9f[_0x5d2614(0x211)]||{}},'query':{'request_message':_0x36e3ec}};}function appendMessage(_0x531f77,_0x171484){const _0x152586=_0x361b6a,_0x1429da=document['getElementById'](_0x152586(0x21f)),_0x18e89e=document['getElementById'](_0x152586(0x278)),_0x2f22fe=document['createElement'](_0x152586(0x23a));_0x2f22fe[_0x152586(0x257)]=_0x152586(0x218)+_0x531f77,_0x531f77===_0x152586(0x1d1)?_0x2f22fe[_0x152586(0x1c4)]='\x0a\x20\x20\x20\x20\x20\x20<div\x20class=\x22msg-avatar\x20avatar-user\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<img\x20src=\x22'+STUDENT_PHOTO_URL+'\x22\x20alt=\x22Student\x22\x20onerror=\x22this.style.display=\x27none\x27;this.parentElement.textContent=\x27🧒\x27;\x22\x20/>\x0a\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20<div\x20class=\x22msg-bubble\x22>'+escapeHtml(_0x171484)+_0x152586(0x28a):_0x2f22fe[_0x152586(0x1c4)]=_0x152586(0x222)+TEACHER_PHOTO_URL+_0x152586(0x1f4)+escapeHtml(_0x171484)+'</div>',_0x1429da[_0x152586(0x261)](_0x2f22fe,_0x18e89e),scrollToBottom();}function setProcessing(_0x4d6b00){const _0x337de1=_0x361b6a;isProcessing=_0x4d6b00;const _0x1b1f0a=document['getElementById'](_0x337de1(0x278)),_0x4078d2=document[_0x337de1(0x1d9)]('send-btn'),_0x35b789=document[_0x337de1(0x1d9)](_0x337de1(0x276)),_0x47b572=document[_0x337de1(0x1d9)]('msg-input');_0x1b1f0a[_0x337de1(0x1e3)][_0x337de1(0x1e0)](_0x337de1(0x1b6),_0x4d6b00),_0x4078d2[_0x337de1(0x1fb)]=_0x4d6b00,_0x35b789[_0x337de1(0x1fb)]=_0x4d6b00,_0x47b572['disabled']=_0x4d6b00,_0x4d6b00?(scrollToBottom(),startTypingMusic()):stopTypingMusic();}function scrollToBottom(){const _0x53d7c3=_0x361b6a,_0x395ee1=document[_0x53d7c3(0x1d9)](_0x53d7c3(0x21f));setTimeout(()=>{const _0xbcd561=_0x53d7c3;_0x395ee1[_0xbcd561(0x1cf)]=_0x395ee1['scrollHeight'];},0x3c);}function escapeHtml(_0x3e897b){const _0x229b21=_0x361b6a;return String(_0x3e897b)[_0x229b21(0x22b)](/&/g,_0x229b21(0x263))['replace'](/</g,_0x229b21(0x274))[_0x229b21(0x22b)](/>/g,'&gt;')['replace'](/"/g,_0x229b21(0x1eb))[_0x229b21(0x22b)](/\n/g,_0x229b21(0x264));}function onInputChange(_0x1435e7){const _0x42eab0=_0x361b6a;updateWordCount(_0x1435e7[_0x42eab0(0x284)]),autoResizeTextarea(_0x1435e7);}function updateWordCount(_0x3cc7a0){const _0x27bffa=_0x361b6a,_0xed3165=document[_0x27bffa(0x1d9)](_0x27bffa(0x223)),_0x5d6f2b=countWords(_0x3cc7a0);_0xed3165[_0x27bffa(0x26c)]=_0x5d6f2b+_0x27bffa(0x22f)+MAX_WORDS+_0x27bffa(0x214),_0xed3165[_0x27bffa(0x1e3)]['toggle'](_0x27bffa(0x239),_0x5d6f2b>MAX_WORDS*0.8);if(_0x5d6f2b>MAX_WORDS){const _0x305288=document['getElementById'](_0x27bffa(0x1f5));_0x305288[_0x27bffa(0x284)]=capWords(_0x305288[_0x27bffa(0x284)],MAX_WORDS),_0xed3165[_0x27bffa(0x26c)]=MAX_WORDS+_0x27bffa(0x22f)+MAX_WORDS+_0x27bffa(0x214),_0xed3165[_0x27bffa(0x1e3)][_0x27bffa(0x1b0)](_0x27bffa(0x239));}}function countWords(_0x5d3c51){const _0x499052=_0x361b6a;return _0x5d3c51[_0x499052(0x282)]()[_0x499052(0x238)](/\s+/)['filter'](Boolean)[_0x499052(0x224)];}function capWords(_0x2273f0,_0x4fdb8b){const _0x41bad3=_0x361b6a;return _0x2273f0[_0x41bad3(0x282)]()[_0x41bad3(0x238)](/\s+/)['filter'](Boolean)[_0x41bad3(0x279)](0x0,_0x4fdb8b)['join']('\x20');}function autoResizeTextarea(_0x2a6cda){const _0x1de34c=_0x361b6a;_0x2a6cda[_0x1de34c(0x1e4)]['height']=_0x1de34c(0x204),_0x2a6cda['style'][_0x1de34c(0x21b)]=Math[_0x1de34c(0x277)](_0x2a6cda[_0x1de34c(0x26f)],0x78)+'px';}function onInputKeydown(_0x4673e8){const _0x187f17=_0x361b6a;_0x4673e8['key']===_0x187f17(0x286)&&!_0x4673e8[_0x187f17(0x22a)]&&(_0x4673e8['preventDefault'](),sendMessage());}function toggleVoice(){if(isRecording)stopVoice();else startVoice();}function startVoice(){const _0x41da6c=_0x361b6a,_0x16842f=window[_0x41da6c(0x201)]||window[_0x41da6c(0x240)];if(!_0x16842f){alert('Your\x20browser\x20doesn\x27t\x20support\x20voice\x20input.\x20Please\x20type\x20instead!\x20🎹');return;}recognition=new _0x16842f(),recognition[_0x41da6c(0x241)]=!![],recognition[_0x41da6c(0x254)]=!![],recognition['lang']=_0x41da6c(0x1c8);let _0xf580f6=document['getElementById']('msg-input')[_0x41da6c(0x284)];recognition['onresult']=_0x2449f3=>{const _0x3a99ce=_0x41da6c;let _0xeed29c='';for(let _0x73ea8e=_0x2449f3[_0x3a99ce(0x27b)];_0x73ea8e<_0x2449f3[_0x3a99ce(0x210)][_0x3a99ce(0x224)];_0x73ea8e++){const _0x2bbf68=_0x2449f3[_0x3a99ce(0x210)][_0x73ea8e][0x0][_0x3a99ce(0x22d)];if(_0x2449f3[_0x3a99ce(0x210)][_0x73ea8e][_0x3a99ce(0x246)])_0xf580f6+=(_0xf580f6?'\x20':'')+_0x2bbf68;else _0xeed29c=_0x2bbf68;}const _0x2f94a5=(_0xf580f6+(_0xeed29c?'\x20'+_0xeed29c:''))[_0x3a99ce(0x282)](),_0x4ce361=document[_0x3a99ce(0x1d9)]('msg-input');_0x4ce361[_0x3a99ce(0x284)]=capWords(_0x2f94a5,MAX_WORDS),updateWordCount(_0x4ce361[_0x3a99ce(0x284)]),autoResizeTextarea(_0x4ce361);if(countWords(_0xf580f6)>=MAX_WORDS)stopVoice();},recognition[_0x41da6c(0x26d)]=_0x419973=>{const _0x42d2f2=_0x41da6c;console[_0x42d2f2(0x239)](_0x42d2f2(0x27c),_0x419973[_0x42d2f2(0x20e)]),stopVoice();},recognition[_0x41da6c(0x1bf)]=()=>{const _0x37ddb6=_0x41da6c;if(isRecording)recognition[_0x37ddb6(0x230)]();},recognition[_0x41da6c(0x230)](),isRecording=!![];const _0x48bebf=document[_0x41da6c(0x1d9)](_0x41da6c(0x276));_0x48bebf[_0x41da6c(0x1e3)]['add'](_0x41da6c(0x1ea)),_0x48bebf[_0x41da6c(0x1fa)]=_0x41da6c(0x24e),_0x48bebf[_0x41da6c(0x26c)]='🔴';}function stopVoice(){const _0x585547=_0x361b6a;recognition&&(recognition[_0x585547(0x1bf)]=null,recognition[_0x585547(0x226)](),recognition=null);isRecording=![];const _0x43df3e=document['getElementById'](_0x585547(0x276));_0x43df3e[_0x585547(0x1e3)][_0x585547(0x265)](_0x585547(0x1ea)),_0x43df3e['title']='Voice\x20input',_0x43df3e['textContent']='🎤';}function playBase64Audio(_0x2144a8){const _0x217311=_0x361b6a;try{let _0x47cb38=_0x217311(0x1d8);if(_0x2144a8[_0x217311(0x1ff)](_0x217311(0x244))||_0x2144a8[_0x217311(0x1ff)](_0x217311(0x25a)))_0x47cb38=_0x217311(0x1f0);const _0xc68618=atob(_0x2144a8),_0x5615d3=new Uint8Array(_0xc68618['length']);for(let _0x5218c5=0x0;_0x5218c5<_0xc68618[_0x217311(0x224)];_0x5218c5++)_0x5615d3[_0x5218c5]=_0xc68618[_0x217311(0x1d6)](_0x5218c5);const _0x52bafa=URL['createObjectURL'](new Blob([_0x5615d3],{'type':_0x47cb38})),_0x1035da=new Audio(_0x52bafa);_0x1035da[_0x217311(0x1d5)]=()=>URL['revokeObjectURL'](_0x52bafa),_0x1035da[_0x217311(0x1ae)]()[_0x217311(0x1e2)](_0x49df31=>console[_0x217311(0x239)]('Audio:',_0x49df31));}catch(_0x5e3224){console['warn']('Audio\x20decode:',_0x5e3224);}}
+</script>
+<script>
+const typingQuotes = [
+  "Gretl, if you hide my guitar one more time, I’m enrolling you in extra singing practice with Kurt!",
+  "Kurt, stop running! Education is chasing you faster than I am!",
+  "Liesl, you’re the eldest—kindly use your powers for good, not for helping Friedrich escape math.",
+  "Friedrich, that’s not ‘creative learning,’ that’s drawing mustaches on your homework.",
+  "Louisa, I admire your imagination, but convincing Marta that books bite is not acceptable.",
+  "Brigitta, thank you for telling the truth… but did you have to announce it like a town crier?",
+  "Marta, if you can run this fast during playtime, you can run just as fast to your lessons!",
+  "Gretl, no, Maria is not your horse. Please dismount immediately.",
+  "Kurt, I don’t care how fast you are—knowledge will catch you eventually!",
+  "All of you, line up! If we can sing in harmony, we can definitely sit quietly for five minutes… right?"
+];
+
+let typingIndex = 0;
+let typingInterval = null;
+
+function startTypingQuotes() {
+  stopTypingQuotes();
+
+  typingInterval = setInterval(() => {
+    typingIndex = (typingIndex + 1) % typingQuotes.length;
+
+    const el = document.getElementById("typing-text");
+    if (el) {
+      el.textContent = typingQuotes[typingIndex];
+    }
+
+  }, 2500); // change every 2.5s
+}
+
+function stopTypingQuotes() {
+  if (typingInterval) {
+    clearInterval(typingInterval);
+    typingInterval = null;
+  }
+}
+
+/* Observe when typing indicator shows/hides */
+const observer = new MutationObserver(() => {
+  const typing = document.getElementById("typing-indicator");
+
+  if (typing?.classList.contains("show")) {
+    startTypingQuotes();
+  } else {
+    stopTypingQuotes();
+  }
+});
+
+observer.observe(document.body, { childList: true, subtree: true });
+</script>
+</body>
+</html>
