@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Learn with Maria 🌟</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Google Analytics — GA_MEASUREMENT_ID declared once, here only -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-03K3WT21HP"></script>
+  <script>
+    const GA_MEASUREMENT_ID = 'G-03K3WT21HP';
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', GA_MEASUREMENT_ID);
+  </script>
+
+  <style>
+    /* ── RESET & BASE ─────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --sun:      #FFD93D;
+      --sky:      #4FC3F7;
+      --grass:    #56C596;
+      --coral:    #FF6B6B;
+      --lavender: #C084FC;
+      --cream:    #FFF8F0;
+      --ink:      #2D2D2D;
+      --white:    #FFFFFF;
+      --shadow:   rgba(0,0,0,0.10);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      overflow-x: hidden;
+    }
+
+    /* ── FLOATING BUBBLES ─────────────────────────── */
+    .deco-layer {
+      position: fixed; inset: 0;
+      pointer-events: none; z-index: 0; overflow: hidden;
+    }
+    .deco {
+      position: absolute; border-radius: 50%; opacity: 0.15;
+      animation: drift linear infinite;
+    }
+    .deco:nth-child(1) { width:180px;height:180px;background:var(--sun);    top:-60px; left:10%; animation-duration:22s; }
+    .deco:nth-child(2) { width:120px;height:120px;background:var(--coral);  top:20%; right:-40px; animation-duration:18s; }
+    .deco:nth-child(3) { width:220px;height:220px;background:var(--sky);    bottom:5%;left:-80px; animation-duration:26s; }
+    .deco:nth-child(4) { width:100px;height:100px;background:var(--grass);  bottom:30%;right:5%; animation-duration:20s; }
+    .deco:nth-child(5) { width:70px; height:70px; background:var(--lavender);top:45%;left:5%; animation-duration:15s; }
+    @keyframes drift {
+      0%,100% { transform: translateY(0) rotate(0deg); }
+      50%      { transform: translateY(-30px) rotate(20deg); }
+    }
+
+    /* ── HEADER ───────────────────────────────────── */
+    header {
+      position: relative; z-index: 10;
+      background: linear-gradient(135deg, #FFD93D 0%, #FF6B6B 38%, #C084FC 72%, #4FC3F7 100%);
+      padding: 0 20px 64px;
+      text-align: center;
+      clip-path: ellipse(120% 100% at 50% 0%);
+      overflow: hidden;
+    }
+    .top-bar {
+      display: flex; justify-content: center; align-items: center;
+      padding: 22px 0 10px; gap: 14px;
+    }
+    .logo-emoji { font-size: 2.8rem; animation: bounce 2s ease-in-out infinite; }
+    @keyframes bounce {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-10px); }
+    }
+    header h1 {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(2.4rem, 7vw, 4.2rem);
+      color: var(--white);
+      text-shadow: 4px 4px 0 rgba(0,0,0,0.15);
+      letter-spacing: 1px;
+    }
+    .tagline {
+      font-size: clamp(1rem, 3vw, 1.3rem);
+      color: rgba(255,255,255,0.92);
+      font-weight: 700; margin-top: 6px;
+    }
+    .star {
+      position: absolute; font-size: 1.6rem;
+      animation: twinkle 3s ease-in-out infinite;
+      user-select: none;
+    }
+    .star:nth-child(1) { top:12%; left:5%;   animation-delay:0s; }
+    .star:nth-child(2) { top:25%; right:8%;  animation-delay:0.7s; }
+    .star:nth-child(3) { top:55%; left:12%;  animation-delay:1.3s; }
+    .star:nth-child(4) { top:10%; right:22%; animation-delay:0.3s; }
+    .star:nth-child(5) { top:65%; right:5%;  animation-delay:1.8s; }
+    @keyframes twinkle {
+      0%,100% { opacity:1;   transform:scale(1); }
+      50%      { opacity:0.3; transform:scale(0.7); }
+    }
+
+    /* ── WAVE ─────────────────────────────────────── */
+    .wave-divider { width:100%; line-height:0; overflow:hidden; }
+    .wave-divider svg { display:block; width:100%; }
+
+    /* ── MAIN ─────────────────────────────────────── */
+    main { position: relative; z-index: 5; }
+    section { padding: 50px 20px; }
+
+    /* ── TILES ────────────────────────────────────── */
+    .tiles-section { max-width: 860px; margin: 0 auto; padding-top: 60px; }
+    .section-label {
+      text-align: center;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.5rem; color: #999; margin-bottom: 30px;
+    }
+    .tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    @media (max-width: 600px) { .tiles { grid-template-columns: 1fr; } }
+
+    .tile {
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; text-align: center;
+      padding: 36px 28px 32px; border-radius: 28px;
+      text-decoration: none; color: var(--white);
+      position: relative; overflow: hidden;
+      box-shadow: 0 8px 30px var(--shadow);
+      transition: transform 0.25s cubic-bezier(.34,1.56,.64,1), box-shadow 0.25s ease;
+    }
+    .tile::before {
+      content: ''; position: absolute; inset: 0;
+      background: rgba(255,255,255,0.12); border-radius: inherit;
+      opacity: 0; transition: opacity 0.2s;
+    }
+    .tile:hover { transform: translateY(-8px) scale(1.03); box-shadow: 0 18px 50px rgba(0,0,0,0.18); }
+    .tile:hover::before { opacity: 1; }
+    .tile-parents  { background: linear-gradient(145deg, #FF6B6B, #FF8E53); }
+    .tile-students { background: linear-gradient(145deg, #4FC3F7, #1565C0); }
+    .tile-icon {
+      font-size: 3.6rem; margin-bottom: 14px; display: block;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
+      animation: wobble 4s ease-in-out infinite;
+    }
+    .tile:nth-child(2) .tile-icon { animation-delay: 1.5s; }
+    @keyframes wobble {
+      0%,100% { transform: rotate(-4deg); }
+      50%      { transform: rotate( 4deg); }
+    }
+    .tile h2 {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(1.3rem, 3.5vw, 1.65rem);
+      margin-bottom: 8px; line-height: 1.2;
+    }
+    .tile p { font-size: 0.95rem; font-weight: 600; opacity: 0.88; line-height: 1.5; }
+    .tile-cta {
+      margin-top: 20px;
+      background: rgba(255,255,255,0.25);
+      border: 2px solid rgba(255,255,255,0.6);
+      border-radius: 50px; padding: 9px 24px;
+      font-family: 'Fredoka One', cursive; font-size: 1rem; color: var(--white);
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .tile:hover .tile-cta { background: rgba(255,255,255,0.4); border-color: var(--white); }
+
+    /* ── VIDEO BANNER ─────────────────────────────────────────────────────
+       Vimeo ?background=1  =  official "banner" embed mode:
+         • Autoplays on load, loops forever
+         • Muted by default (required by browsers for autoplay)
+         • No controls, no title bar, no avatar — pure video
+       We use only the `allow` attribute (not the legacy `allowfullscreen`
+       attribute) to avoid the browser warning:
+         "Allow attribute will take precedence over allowfullscreen"
+       pointer-events: none on the iframe prevents any accidental interaction.
+    ──────────────────────────────────────────────────────────────────────── */
+    .video-section { padding: 0 0 50px; width: 100%; }
+    .video-banner-label {
+      text-align: center;
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      color: var(--coral); padding: 0 20px 22px;
+    }
+    .video-banner-wrap {
+      position: relative; width: 100%;
+      padding-bottom: 56.25%; /* 16 : 9 */
+      overflow: hidden; background: #111;
+    }
+    .video-banner-wrap iframe {
+      position: absolute; top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: none; pointer-events: none;
+    }
+
+    /* ── HOW-TO ───────────────────────────────────── */
+    .howto-section { max-width: 780px; margin: 0 auto; padding: 20px 20px 70px; }
+    .howto-header {
+      text-align: center;
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(1.5rem, 4vw, 2.1rem);
+      color: var(--ink); margin-bottom: 36px;
+    }
+    .howto-header span { color: var(--sky); }
+    .steps { display: flex; flex-direction: column; gap: 20px; }
+    .step {
+      display: flex; gap: 18px;
+      background: var(--white); border-radius: 20px;
+      padding: 22px 24px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+      border-left: 6px solid var(--sun); align-items: flex-start;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .step:hover { transform: translateX(6px); box-shadow: 0 8px 32px rgba(0,0,0,0.12); }
+    .step:nth-child(2) { border-color: var(--coral); }
+    .step:nth-child(3) { border-color: var(--grass); }
+    .step:nth-child(4) { border-color: var(--sky); }
+    .step:nth-child(5) { border-color: var(--lavender); }
+    .step:nth-child(6) { border-color: var(--sun); }
+    .step-num {
+      min-width: 44px; height: 44px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--sun), var(--coral));
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Fredoka One', cursive; font-size: 1.25rem; color: var(--white);
+      box-shadow: 0 4px 12px rgba(255,107,107,0.35); flex-shrink: 0;
+    }
+    .step:nth-child(2) .step-num { background: linear-gradient(135deg, var(--coral), #ff8e53); }
+    .step:nth-child(3) .step-num { background: linear-gradient(135deg, var(--grass), #34d399); }
+    .step:nth-child(4) .step-num { background: linear-gradient(135deg, var(--sky), #0ea5e9); }
+    .step:nth-child(5) .step-num { background: linear-gradient(135deg, var(--lavender), #a855f7); }
+    .step:nth-child(6) .step-num { background: linear-gradient(135deg, #fbbf24, #f59e0b); }
+    .step-content h3 {
+      font-family: 'Fredoka One', cursive; font-size: 1.1rem;
+      color: var(--ink); margin-bottom: 6px;
+    }
+    .step-content p  { font-size: 0.95rem; color: #555; line-height: 1.65; }
+    .step-content ul { margin-top: 6px; padding-left: 18px; }
+    .step-content ul li { font-size: 0.93rem; color: #555; line-height: 1.7; }
+    .done-banner {
+      margin-top: 32px;
+      background: linear-gradient(135deg, var(--grass), #34d399);
+      border-radius: 20px; padding: 24px 28px; text-align: center;
+      color: var(--white); box-shadow: 0 8px 30px rgba(86,197,150,0.4);
+    }
+    .done-banner h3 { font-family:'Fredoka One',cursive; font-size:1.5rem; margin-bottom:8px; }
+    .done-banner p  { font-size:1rem; opacity:0.92; line-height:1.6; }
+
+    /* ── FOOTER ───────────────────────────────────── */
+    footer {
+      background: linear-gradient(90deg,#FFD93D22,#4FC3F722,#FF6B6B22);
+      text-align: center; padding: 28px 20px;
+      font-size: 0.9rem; color: #888; font-weight: 600;
+      border-top: 2px dashed #e0e0e0;
+    }
+    footer span { color: var(--coral); }
+
+    /* ── SCROLL REVEAL ────────────────────────────── */
+    .reveal { opacity:0; transform:translateY(30px); transition:opacity .6s ease,transform .6s ease; }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+  </style>
+</head>
+<body>
+
+  <div class="deco-layer" aria-hidden="true">
+    <div class="deco"></div><div class="deco"></div><div class="deco"></div>
+    <div class="deco"></div><div class="deco"></div>
+  </div>
+
+  <!-- ══ HEADER ══════════════════════════════════ -->
+  <header>
+    <span class="star">⭐</span><span class="star">🌟</span>
+    <span class="star">✨</span><span class="star">💫</span><span class="star">🌈</span>
+    <div class="top-bar">
+      <span class="logo-emoji">📚</span>
+      <h1>Learn with Maria</h1>
+      <span class="logo-emoji" style="animation-delay:.5s">🎓</span>
+    </div>
+    <p class="tagline">🎉 Fun, personalized learning — made just for your little superstar! 🚀</p>
+  </header>
+
+  <div class="wave-divider">
+    <svg viewBox="0 0 1200 50" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <path d="M0,30 C300,55 900,5 1200,30 L1200,0 L0,0 Z" fill="#FF6B6B" opacity="0.18"/>
+      <path d="M0,40 C400,10 800,60 1200,20 L1200,0 L0,0 Z" fill="#FFD93D" opacity="0.15"/>
+    </svg>
+  </div>
+
+  <main>
+
+    <!-- ══ TILES ════════════════════════════════════ -->
+    <section class="tiles-section">
+      <p class="section-label">👋 Let's Start Learning with maria</p>
+      <div class="tiles">
+        <a class="tile tile-parents reveal"
+           href="https://buildwithsupratim.github.io/maria_V1.0/curriculumapp.html"
+           target="_blank" rel="noopener">
+          <span class="tile-icon">👩‍🏫</span>
+          <h2>Parents &amp; Teachers</h2>
+          <p>Curate the perfect curriculum for your child's learning journey</p>
+          <div class="tile-cta">Start Curating →</div>
+        </a>
+        <a class="tile tile-students reveal"
+           href="https://buildwithsupratim.github.io/maria_V1.0/chat.html"
+           target="_blank" rel="noopener" style="transition-delay:.12s">
+          <span class="tile-icon">🧒</span>
+          <h2>Students</h2>
+          <p>Let's start learning! Your personalized lessons are waiting for you</p>
+          <div class="tile-cta">Let's Go! 🚀</div>
+        </a>
+      </div>
+    </section>
+
+    <!-- ══ VIDEO BANNER ═════════════════════════════ -->
+    <section class="video-section reveal">
+      <h2 class="video-banner-label">🎬 See Maria in Action!</h2>
+      <div class="video-banner-wrap">
+        <!--
+          ?background=1  → Vimeo banner mode: autoplay, loop, muted, no UI chrome.
+          Only `allow` is used — NOT the legacy `allowfullscreen` attribute —
+          so browsers don't emit the "will take precedence" warning.
+        -->
+        <iframe
+          src="https://player.vimeo.com/video/1178060711?background=1&autoplay=1&muted=0&loop=1&title=0&byline=0&portrait=0"
+          allow="autoplay; fullscreen; picture-in-picture"
+          title="Learn with Maria – Demo Video">
+        </iframe>
+      </div>
+    </section>
+
+    <!-- ══ HOW-TO GUIDE ═════════════════════════════ -->
+    <section class="howto-section">
+      <h2 class="howto-header reveal">📘 How to Use the App:<br><span>Step-by-Step Guide</span></h2>
+
+      <div class="steps">
+
+        <div class="step reveal">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h3>🎭 Choose a Teaching Style (Teacher Persona)</h3>
+            <p>Start by selecting a teacher persona that best suits the student's needs. For example:</p>
+            <ul>
+              <li>🤗 Friendly and patient</li>
+              <li>📝 Exam-focused and structured</li>
+              <li>📖 Story-based or visual learning</li>
+            </ul>
+            <p style="margin-top:6px">This choice determines <strong>how the lessons will be taught.</strong></p>
+          </div>
+        </div>
+
+        <div class="step reveal">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h3>📋 Review and Prepare the Curriculum</h3>
+            <p>The teacher or parent goes through the curriculum they want the student to learn. This can include topics, chapters, or specific learning goals.</p>
+          </div>
+        </div>
+
+        <div class="step reveal">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h3>📤 Submit the Curriculum</h3>
+            <p>Upload or enter the selected curriculum into the app. This tells the system <strong>what needs to be taught.</strong></p>
+          </div>
+        </div>
+
+        <div class="step reveal">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <h3>🔑 Generate Lesson Code</h3>
+            <p>Once the curriculum is submitted, the app automatically generates a <strong>unique lesson code</strong> to connect the student to their lesson.</p>
+          </div>
+        </div>
+
+        <div class="step reveal">
+          <div class="step-num">5</div>
+          <div class="step-content">
+            <h3>🎮 Student Enters the Lesson Code</h3>
+            <p>The student opens the app and enters the lesson code for instant access to their assigned lessons — easy as 1, 2, 3!</p>
+          </div>
+        </div>
+
+        <div class="step reveal">
+          <div class="step-num">6</div>
+          <div class="step-content">
+            <h3>🌟 Start Personalized Learning</h3>
+            <p>The student receives personalized, curated lessons based on:</p>
+            <ul>
+              <li>✨ The selected teacher persona</li>
+              <li>📚 The submitted curriculum</li>
+            </ul>
+            <p style="margin-top:6px">Lessons adapt to match the student's <strong>unique learning style and needs.</strong></p>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="done-banner reveal">
+        <h3>✅ That's it!</h3>
+        <p>With just these steps, students can start learning in a way that's<br><strong>tailored specifically for them.</strong> 🎉</p>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ══ FOOTER ══════════════════════════════════ -->
+  <footer>
+    Made with <span>❤️</span> for curious little minds everywhere 🌍
+  </footer>
+
+  <script>
+    // NOTE: GA_MEASUREMENT_ID is declared in <head> — not redeclared here.
+
+    // ── Scroll reveal ──────────────────────────────
+    const revealEls = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const siblings = Array.from(entry.target.parentElement.children);
+        const delay = siblings.indexOf(entry.target) * 80;
+        setTimeout(() => entry.target.classList.add('visible'), delay);
+        revealObserver.unobserve(entry.target);
+      });
+    }, { threshold: 0.12 });
+    revealEls.forEach(el => revealObserver.observe(el));
+
+    // ── GA: track tile clicks ──────────────────────
+    document.querySelectorAll('.tile').forEach(tile => {
+      tile.addEventListener('click', () => {
+        const label = tile.classList.contains('tile-parents') ? 'parents_teachers' : 'students';
+        if (typeof gtag === 'function') gtag('event', 'tile_click', { tile: label });
+      });
+    });
+  </script>
+</body>
+</html>
