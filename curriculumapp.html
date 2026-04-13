@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>🌟 Maria — Lesson Builder</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+
+<!-- ============================================================
+     CONFIGURATION — Edit these values
+     ============================================================ -->
+<script>
+const _0x276844=_0xa58c;function _0xa58c(_0x3af2e4,_0x3cd662){_0x3af2e4=_0x3af2e4-0xff;const _0x369bb3=_0x369b();let _0xa58ccc=_0x369bb3[_0x3af2e4];return _0xa58ccc;}(function(_0x33007f,_0x3b7768){const _0x3e506d=_0xa58c,_0x95ecde=_0x33007f();while(!![]){try{const _0x11a548=-parseInt(_0x3e506d(0x122))/0x1+-parseInt(_0x3e506d(0x100))/0x2*(parseInt(_0x3e506d(0x11e))/0x3)+-parseInt(_0x3e506d(0x125))/0x4*(-parseInt(_0x3e506d(0x119))/0x5)+parseInt(_0x3e506d(0x107))/0x6*(-parseInt(_0x3e506d(0x102))/0x7)+-parseInt(_0x3e506d(0x10c))/0x8*(-parseInt(_0x3e506d(0x101))/0x9)+parseInt(_0x3e506d(0x10d))/0xa+parseInt(_0x3e506d(0x10f))/0xb;if(_0x11a548===_0x3b7768)break;else _0x95ecde['push'](_0x95ecde['shift']());}catch(_0x1b92f3){_0x95ecde['push'](_0x95ecde['shift']());}}}(_0x369b,0x20f5a));const hostOK=location[_0x276844(0x116)]==='buildwithsupratim.github.io',pathOK=location['pathname'][_0x276844(0x11a)]('/maria_V1.0');if(!hostOK||!pathOK)throw new Error('');const ENV=_0x276844(0x11b),API_URL=_0x276844(0x103),GA_MEASUREMENT_ID=_0x276844(0x10e),CF_TURNSTILE_SITE_KEY=_0x276844(0x108),TEST_AUTH_CODE='',PERSONA_URL=_0x276844(0x104),CURRICULUM_INDEX=_0x276844(0x10b);function getHeaders(){const _0x1b408f=_0x276844,_0x3937c6={'Content-Type':_0x1b408f(0x120)};if(ENV===_0x1b408f(0x112))_0x3937c6['auth_code']=TEST_AUTH_CODE;return _0x3937c6;}function _0x369b(){const _0x1ecc31=['script','config','30OpUeQe','startsWith','PROD','DOMContentLoaded','https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback','109272HfUnip','style','application/json','head','205128rMKsEJ','src','log','110532sBbcym','createElement','dataLayer','addEventListener','14aGQqXG','162zgQfvG','7KLdJTk','https://digifreely-parentteacher.hf.space/curriculum','https://raw.githubusercontent.com/buildwithsupratim/maria/refs/heads/main/teacherpersona.json','push','.cf-widget-wrap','520638dxgBRc','0x4AAAAAAC1eARqwmPRQbbMJ','[TEST]\x20Cloudflare\x20Turnstile\x20disabled.','gtag','https://raw.githubusercontent.com/buildwithsupratim/maria/refs/heads/main/curriculum_index.json','43328tklTQt','2445020pFBhbJ','G-03K3WT21HP','1914913YVfPLw','appendChild','async','TEST','none','display','defer','hostname'];_0x369b=function(){return _0x1ecc31;};return _0x369b();}ENV===_0x276844(0x11b)?function initGA(){const _0x23edc1=_0x276844,_0x46f258=document[_0x23edc1(0x126)](_0x23edc1(0x117));_0x46f258[_0x23edc1(0x111)]=!![],_0x46f258[_0x23edc1(0x123)]='https://www.googletagmanager.com/gtag/js?id='+GA_MEASUREMENT_ID,document[_0x23edc1(0x121)]['appendChild'](_0x46f258),window[_0x23edc1(0x127)]=window[_0x23edc1(0x127)]||[];function _0x2935b6(){const _0x142c9d=_0x23edc1;dataLayer[_0x142c9d(0x105)](arguments);}window[_0x23edc1(0x10a)]=_0x2935b6,_0x2935b6('js',new Date()),_0x2935b6(_0x23edc1(0x118),GA_MEASUREMENT_ID);}():window[_0x276844(0x10a)]=function(){};ENV===_0x276844(0x11b)?(function(){const _0x4ed2cc=_0x276844,_0x2a9e40=document[_0x4ed2cc(0x126)](_0x4ed2cc(0x117));_0x2a9e40[_0x4ed2cc(0x123)]=_0x4ed2cc(0x11d),_0x2a9e40[_0x4ed2cc(0x111)]=!![],_0x2a9e40[_0x4ed2cc(0x115)]=!![],document[_0x4ed2cc(0x121)][_0x4ed2cc(0x110)](_0x2a9e40);}()):(document[_0x276844(0xff)](_0x276844(0x11c),()=>{const _0x2155e8=_0x276844,_0x1caf22=document['querySelector'](_0x2155e8(0x106));if(_0x1caf22)_0x1caf22[_0x2155e8(0x11f)][_0x2155e8(0x114)]=_0x2155e8(0x113);}),console[_0x276844(0x124)](_0x276844(0x109)));
+</script>
+
+<style>
+/* ═══════════════════════════════════════════════════════════
+   CSS VARIABLES & RESET
+═══════════════════════════════════════════════════════════ */
+:root {
+  --c-purple:  #7C3AED;
+  --c-pink:    #EC4899;
+  --c-orange:  #F97316;
+  --c-yellow:  #FACC15;
+  --c-green:   #22C55E;
+  --c-blue:    #3B82F6;
+  --c-teal:    #14B8A6;
+  --c-red:     #EF4444;
+  --c-bg:      #FFF9F0;
+  --c-card:    #FFFFFF;
+  --c-text:    #1E1B4B;
+  --c-muted:   #6B6B9B;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+  --shadow-pop: 0 8px 0 0 rgba(0,0,0,0.12);
+  --shadow-card: 0 4px 20px rgba(0,0,0,0.08);
+  --transition: all 0.25s cubic-bezier(0.34,1.56,0.64,1);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--c-bg);
+  color: var(--c-text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ═══ BUBBLY BACKGROUND ═══ */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: -1;
+  background:
+    radial-gradient(circle at 10% 20%, rgba(124,58,237,0.08) 0%, transparent 50%),
+    radial-gradient(circle at 85% 10%, rgba(236,72,153,0.07) 0%, transparent 45%),
+    radial-gradient(circle at 50% 80%, rgba(59,130,246,0.07) 0%, transparent 50%),
+    radial-gradient(circle at 90% 85%, rgba(34,197,94,0.06) 0%, transparent 40%),
+    var(--c-bg);
+}
+
+/* ═══ FLOATING DECORATIONS ═══ */
+.floater {
+  position: fixed; border-radius: 50%; opacity: 0.15; pointer-events: none; z-index: -1;
+  animation: floatBob 6s ease-in-out infinite;
+}
+.floater:nth-child(1){ width:120px;height:120px;background:var(--c-purple);top:5%;left:2%;animation-delay:0s; }
+.floater:nth-child(2){ width:80px;height:80px;background:var(--c-pink);top:20%;right:3%;animation-delay:1.5s; }
+.floater:nth-child(3){ width:60px;height:60px;background:var(--c-yellow);bottom:25%;left:5%;animation-delay:3s; }
+.floater:nth-child(4){ width:100px;height:100px;background:var(--c-teal);bottom:10%;right:6%;animation-delay:0.8s; }
+.floater:nth-child(5){ width:50px;height:50px;background:var(--c-orange);top:55%;left:1%;animation-delay:2.2s; }
+@keyframes floatBob {
+  0%,100%{ transform: translateY(0) rotate(0deg); }
+  50%{ transform: translateY(-18px) rotate(8deg); }
+}
+
+/* ═══ WRAPPER ═══ */
+.app-wrap {
+  max-width: 860px; margin: 0 auto;
+  padding: 24px 16px 80px;
+}
+
+/* ═══ HEADER ═══ */
+.app-header {
+  text-align: center; padding: 32px 0 24px;
+}
+.app-logo {
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(2rem, 5vw, 3rem);
+  background: linear-gradient(135deg, var(--c-purple), var(--c-pink), var(--c-orange));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: inline-block;
+  filter: drop-shadow(2px 2px 0 rgba(124,58,237,0.15));
+}
+.app-tagline {
+  color: var(--c-muted); font-size: 1rem; font-weight: 600; margin-top: 4px;
+}
+
+/* ═══ PROGRESS BAR ═══ */
+.progress-bar {
+  display: flex; gap: 8px; align-items: center;
+  margin: 0 auto 36px; max-width: 500px;
+}
+.progress-step {
+  flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px;
+}
+.progress-dot {
+  width: 40px; height: 40px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Fredoka One', cursive; font-size: 1rem;
+  border: 3px solid #E5E7EB;
+  background: white; color: #9CA3AF;
+  transition: var(--transition);
+  position: relative; z-index: 1;
+}
+.progress-dot.active {
+  background: var(--c-purple); border-color: var(--c-purple);
+  color: white; box-shadow: 0 0 0 5px rgba(124,58,237,0.2);
+}
+.progress-dot.done {
+  background: var(--c-green); border-color: var(--c-green); color: white;
+}
+.progress-label { font-size: 0.72rem; font-weight: 700; color: var(--c-muted); text-align: center; }
+.progress-label.active { color: var(--c-purple); }
+.progress-connector {
+  flex: 0.4; height: 3px; background: #E5E7EB; border-radius: 9px; margin-bottom: 20px;
+  transition: background 0.4s;
+}
+.progress-connector.done { background: var(--c-green); }
+
+/* ═══ SCREEN ═══ */
+.screen { display: none; animation: fadeUp 0.4s ease both; }
+.screen.active { display: block; }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ═══ SECTION TITLE ═══ */
+.section-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(1.4rem, 3.5vw, 1.9rem);
+  margin-bottom: 6px;
+}
+.section-sub { color: var(--c-muted); font-size: 0.92rem; font-weight: 600; margin-bottom: 24px; }
+
+/* ═══ INPUT ═══ */
+.input-wrap { margin-bottom: 28px; }
+.input-label {
+  display: block; font-weight: 800; font-size: 0.9rem;
+  margin-bottom: 8px; color: var(--c-purple);
+  text-transform: uppercase; letter-spacing: 0.05em;
+}
+.fancy-input {
+  width: 100%; padding: 14px 18px;
+  font-family: 'Nunito', sans-serif; font-size: 1rem; font-weight: 700;
+  border: 3px solid #E5E7EB; border-radius: 16px;
+  outline: none; background: white; color: var(--c-text);
+  transition: var(--transition);
+  box-shadow: 0 4px 0 #E5E7EB;
+}
+.fancy-input:focus {
+  border-color: var(--c-purple);
+  box-shadow: 0 4px 0 var(--c-purple), 0 0 0 4px rgba(124,58,237,0.12);
+}
+
+/* ═══ PERSONA CARDS ═══ */
+.persona-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px; margin-bottom: 32px;
+}
+.persona-card {
+  background: white; border-radius: var(--radius-lg);
+  padding: 20px; cursor: pointer;
+  border: 3px solid #E5E7EB;
+  box-shadow: var(--shadow-pop);
+  transition: var(--transition);
+  position: relative; overflow: hidden;
+  user-select: none;
+}
+.persona-card::before {
+  content: ''; position: absolute;
+  top: 0; left: 0; right: 0; height: 5px;
+}
+.persona-card:nth-child(6n+1)::before { background: var(--c-purple); }
+.persona-card:nth-child(6n+2)::before { background: var(--c-pink); }
+.persona-card:nth-child(6n+3)::before { background: var(--c-orange); }
+.persona-card:nth-child(6n+4)::before { background: var(--c-green); }
+.persona-card:nth-child(6n+5)::before { background: var(--c-blue); }
+.persona-card:nth-child(6n+6)::before { background: var(--c-teal); }
+.persona-card:hover { transform: translateY(-4px); box-shadow: 0 12px 0 rgba(0,0,0,0.12); }
+.persona-card.selected {
+  border-color: var(--c-purple);
+  background: linear-gradient(135deg, #F5F3FF, #EDE9FE);
+  box-shadow: 0 8px 0 rgba(124,58,237,0.25);
+}
+.persona-card.selected::after {
+  content: '✓';
+  position: absolute; top: 12px; right: 14px;
+  width: 24px; height: 24px; background: var(--c-purple);
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  color: white; font-size: 0.75rem; font-weight: 900;
+  display: grid; place-items: center;
+}
+.persona-emoji { font-size: 2rem; margin-bottom: 10px; }
+.persona-name {
+  font-family: 'Fredoka One', cursive; font-size: 1.05rem;
+  color: var(--c-text); margin-bottom: 8px;
+}
+.persona-desc { font-size: 0.82rem; color: var(--c-muted); line-height: 1.5; }
+
+/* ═══ CURRICULUM NAV ═══ */
+.crumb-trail {
+  display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+  margin-bottom: 20px;
+}
+.crumb {
+  font-size: 0.82rem; font-weight: 800;
+  padding: 4px 12px; border-radius: 20px;
+  background: #F3F4F6; color: var(--c-muted);
+  cursor: default;
+}
+.crumb.active { background: var(--c-purple); color: white; }
+.crumb.done { background: var(--c-green); color: white; cursor: pointer; }
+.crumb-sep { color: #D1D5DB; font-weight: 900; font-size: 1rem; }
+
+.choice-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px; margin-bottom: 28px;
+}
+.choice-btn {
+  background: white; border: 3px solid #E5E7EB;
+  border-radius: 16px; padding: 16px 12px;
+  text-align: center; cursor: pointer;
+  font-family: 'Fredoka One', cursive; font-size: 1rem;
+  color: var(--c-text); box-shadow: 0 5px 0 #E5E7EB;
+  transition: var(--transition);
+}
+.choice-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 0 rgba(0,0,0,0.1); }
+.choice-btn.active {
+  border-color: var(--c-orange); background: #FFF7ED;
+  box-shadow: 0 5px 0 rgba(249,115,22,0.3); color: var(--c-orange);
+}
+
+/* ═══ TOPIC CARDS ═══ */
+.topics-header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 16px;
+}
+.topics-count {
+  font-size: 0.85rem; font-weight: 700; color: var(--c-muted);
+}
+.select-all-btn {
+  font-family: 'Nunito', sans-serif; font-size: 0.82rem; font-weight: 800;
+  padding: 6px 14px; border-radius: 20px; cursor: pointer; border: 2px solid var(--c-teal);
+  background: white; color: var(--c-teal); transition: var(--transition);
+}
+.select-all-btn:hover { background: var(--c-teal); color: white; }
+
+.topic-card {
+  background: white; border: 3px solid #E5E7EB;
+  border-radius: var(--radius-lg); margin-bottom: 12px;
+  overflow: hidden; transition: var(--transition);
+}
+.topic-card.selected { border-color: var(--c-green); }
+.topic-card-header {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 16px 18px; cursor: pointer;
+}
+.topic-checkbox {
+  width: 24px; height: 24px; min-width: 24px;
+  border: 3px solid #D1D5DB; border-radius: 8px;
+  display: grid; place-items: center;
+  transition: var(--transition); background: white;
+}
+.topic-checkbox.checked {
+  background: var(--c-green); border-color: var(--c-green);
+  color: white; font-size: 0.75rem; font-weight: 900;
+}
+.topic-name {
+  font-family: 'Fredoka One', cursive; font-size: 1rem;
+  color: var(--c-text); flex: 1; line-height: 1.4;
+}
+.topic-expand { color: var(--c-muted); font-size: 0.9rem; cursor: pointer; padding: 2px; }
+.topic-body {
+  padding: 0 18px 16px 56px;
+  display: none; border-top: 2px dashed #F3F4F6;
+  padding-top: 14px;
+}
+.topic-body.open { display: block; }
+.topic-content {
+  font-size: 0.85rem; color: var(--c-muted); line-height: 1.6;
+  margin-bottom: 10px;
+}
+.obj-list { list-style: none; }
+.obj-list li {
+  font-size: 0.82rem; font-weight: 600; color: var(--c-text);
+  padding: 4px 0 4px 18px; position: relative;
+}
+.obj-list li::before {
+  content: '★'; position: absolute; left: 0;
+  color: var(--c-yellow); font-size: 0.7rem; top: 6px;
+}
+
+/* ═══ PREVIEW CARD ═══ */
+.preview-card {
+  background: white; border-radius: var(--radius-xl);
+  border: 3px solid #E5E7EB; box-shadow: var(--shadow-card);
+  overflow: hidden; margin-bottom: 28px;
+}
+.preview-banner {
+  background: linear-gradient(135deg, var(--c-purple), var(--c-pink), var(--c-orange));
+  padding: 24px 28px; color: white;
+}
+.preview-banner h2 { font-family:'Fredoka One',cursive; font-size: 1.5rem; }
+.preview-banner p { font-size: 0.9rem; opacity: 0.85; margin-top: 4px; }
+.preview-body { padding: 24px 28px; }
+.preview-row {
+  display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px;
+}
+.preview-chip {
+  padding: 6px 14px; border-radius: 20px;
+  font-size: 0.8rem; font-weight: 800;
+  display: flex; align-items: center; gap: 6px;
+}
+.chip-purple { background:#EDE9FE; color:var(--c-purple); }
+.chip-pink   { background:#FCE7F3; color:#BE185D; }
+.chip-orange { background:#FFF7ED; color:var(--c-orange); }
+.chip-green  { background:#DCFCE7; color:#15803D; }
+.chip-blue   { background:#EFF6FF; color:var(--c-blue); }
+
+.preview-section-title {
+  font-family: 'Fredoka One', cursive; font-size: 1rem;
+  color: var(--c-purple); margin-bottom: 12px;
+  display: flex; align-items: center; gap: 8px;
+}
+.preview-topic-item {
+  background: #FAFAFA; border: 2px solid #F3F4F6;
+  border-radius: 12px; padding: 12px 16px; margin-bottom: 8px;
+}
+.preview-topic-name {
+  font-weight: 800; font-size: 0.9rem; margin-bottom: 4px;
+  color: var(--c-text);
+}
+.preview-topic-objs {
+  font-size: 0.78rem; color: var(--c-muted); font-weight: 600;
+}
+.preview-topic-objs span {
+  display: inline-block; background: #EDE9FE; color: var(--c-purple);
+  padding: 2px 8px; border-radius: 20px; margin: 2px 2px 2px 0;
+}
+
+/* ═══ BUTTONS ═══ */
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 14px 28px; border-radius: 16px; border: none;
+  font-family: 'Fredoka One', cursive; font-size: 1.1rem;
+  cursor: pointer; transition: var(--transition);
+  text-decoration: none;
+}
+.btn-primary {
+  background: var(--c-purple); color: white;
+  box-shadow: 0 6px 0 #5B21B6;
+}
+.btn-primary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 0 #5B21B6; }
+.btn-primary:active:not(:disabled) { transform: translateY(2px); box-shadow: 0 2px 0 #5B21B6; }
+.btn-secondary {
+  background: white; color: var(--c-purple);
+  border: 3px solid var(--c-purple); box-shadow: 0 6px 0 #DDD6FE;
+}
+.btn-secondary:hover { background: #F5F3FF; transform: translateY(-2px); }
+.btn-submit {
+  background: linear-gradient(135deg, var(--c-orange), var(--c-pink));
+  color: white; box-shadow: 0 6px 0 #C2410C;
+  font-size: 1.2rem; padding: 16px 40px;
+}
+.btn-submit:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 10px 0 #C2410C; }
+.btn-submit:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
+.btn-actions { display: flex; gap: 12px; justify-content: flex-end; align-items: center; flex-wrap: wrap; }
+
+/* ═══ LOADING SPINNER ═══ */
+.spinner-wrap {
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; padding: 60px 20px; gap: 16px;
+}
+.spinner {
+  width: 56px; height: 56px; border: 5px solid #EDE9FE;
+  border-top-color: var(--c-purple); border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.spinner-text {
+  font-family: 'Fredoka One', cursive; font-size: 1.1rem;
+  color: var(--c-muted);
+}
+
+/* ═══ SUCCESS CARD ═══ */
+.success-card {
+  text-align: center; padding: 60px 32px;
+  background: white; border-radius: var(--radius-xl);
+  border: 3px solid var(--c-green); box-shadow: 0 8px 0 rgba(34,197,94,0.2);
+  animation: popIn 0.5s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.8); }
+  to   { opacity: 1; transform: scale(1); }
+}
+.success-icon { font-size: 4rem; margin-bottom: 12px; }
+.success-title { font-family:'Fredoka One',cursive; font-size: 2rem; color: var(--c-green); margin-bottom: 8px; }
+.success-sub { color: var(--c-muted); font-size: 0.95rem; margin-bottom: 24px; font-weight: 600; }
+.lesson-code-box {
+  display: inline-block;
+  background: linear-gradient(135deg, #EDE9FE, #FCE7F3);
+  border: 3px solid var(--c-purple); border-radius: 16px;
+  padding: 18px 32px;
+}
+.lesson-code-label {
+  font-size: 0.78rem; font-weight: 800; color: var(--c-purple);
+  text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px;
+}
+.lesson-code-value {
+  font-family: 'Fredoka One', cursive; font-size: 2.2rem;
+  color: var(--c-purple); letter-spacing: 0.05em;
+}
+
+/* ═══ ERROR BANNER ═══ */
+.error-banner {
+  background: #FEF2F2; border: 2px solid var(--c-red);
+  border-radius: 12px; padding: 12px 16px;
+  color: var(--c-red); font-weight: 700; font-size: 0.9rem;
+  margin-bottom: 16px; display: none;
+}
+.error-banner.show { display: flex; align-items: center; gap: 10px; }
+
+/* ═══ CF WIDGET ═══ */
+.cf-widget-wrap { margin-bottom: 20px; display: flex; justify-content: center; }
+
+/* ═══ EMPTY STATE ═══ */
+.empty-state { text-align: center; padding: 40px 20px; color: var(--c-muted); }
+.empty-state-icon { font-size: 3rem; margin-bottom: 12px; }
+.empty-state-text { font-family: 'Fredoka One', cursive; font-size: 1.2rem; }
+
+/* ═══ PERSONA PERSONA EMOJI MAP ═══ */
+/* assigned via JS */
+
+/* ═══ RESPONSIVE ═══ */
+@media (max-width: 600px) {
+  .persona-grid { grid-template-columns: 1fr 1fr; }
+  .preview-body { padding: 16px; }
+  .preview-banner { padding: 18px; }
+  .btn-actions { justify-content: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- Floating bubbles -->
+<div class="floater"></div>
+<div class="floater"></div>
+<div class="floater"></div>
+<div class="floater"></div>
+<div class="floater"></div>
+
+<div class="app-wrap">
+
+  <!-- ── HEADER ── -->
+  <div class="app-header">
+    <div class="app-logo">🌟 Maria</div>
+    <div class="app-tagline">Build personalised lessons for your child in minutes!</div>
+  </div>
+
+  <!-- ── PROGRESS ── -->
+  <div class="progress-bar">
+    <div class="progress-step">
+      <div class="progress-dot active" id="pd-1">1</div>
+      <div class="progress-label active" id="pl-1">Teacher</div>
+    </div>
+    <div class="progress-connector" id="pc-1"></div>
+    <div class="progress-step">
+      <div class="progress-dot" id="pd-2">2</div>
+      <div class="progress-label" id="pl-2">Curriculum</div>
+    </div>
+    <div class="progress-connector" id="pc-2"></div>
+    <div class="progress-step">
+      <div class="progress-dot" id="pd-3">3</div>
+      <div class="progress-label" id="pl-3">Preview</div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════
+       SCREEN 1 — Teacher Persona
+  ════════════════════════════════════════ -->
+  <div class="screen active" id="screen-1">
+    <div class="section-title">👩‍🏫 Choose a Teacher Persona</div>
+    <div class="section-sub">Pick the teaching style that best suits your child.</div>
+
+    <div class="input-wrap">
+      <label class="input-label" for="student-name">✏️ Student's Name</label>
+      <input class="fancy-input" id="student-name" type="text"
+             placeholder="Enter your child's name…" autocomplete="off" />
+    </div>
+
+    <div id="persona-loading" class="spinner-wrap">
+      <div class="spinner"></div>
+      <div class="spinner-text">Loading teacher personas…</div>
+    </div>
+    <div id="persona-grid" class="persona-grid" style="display:none"></div>
+    <div id="persona-error" class="error-banner"></div>
+
+    <div class="btn-actions">
+      <button class="btn btn-primary" id="btn-next-1" onclick="goToScreen2()">
+        Next → Curriculum
+      </button>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════
+       SCREEN 2 — Curriculum Selection
+  ════════════════════════════════════════ -->
+  <div class="screen" id="screen-2">
+    <div class="section-title">📚 Select Curriculum</div>
+    <div class="section-sub">Navigate to your subject and pick the topics you want.</div>
+
+    <!-- Breadcrumb -->
+    <div class="crumb-trail" id="crumb-trail">
+      <div class="crumb active">Board</div>
+    </div>
+
+    <!-- Navigation panels -->
+    <div id="board-panel">
+      <div class="choice-grid" id="board-grid"></div>
+    </div>
+    <div id="class-panel" style="display:none">
+      <div class="choice-grid" id="class-grid"></div>
+    </div>
+    <div id="subject-panel" style="display:none">
+      <div class="choice-grid" id="subject-grid"></div>
+    </div>
+
+    <!-- Topics (shown after subject selection) -->
+    <div id="topics-panel" style="display:none">
+      <div id="topics-loading" class="spinner-wrap">
+        <div class="spinner"></div>
+        <div class="spinner-text">Loading topics…</div>
+      </div>
+      <div id="topics-content" style="display:none">
+        <div class="topics-header">
+          <div class="topics-count" id="topics-count"></div>
+          <button class="select-all-btn" id="select-all-btn" onclick="toggleSelectAll()">☑ Deselect All</button>
+        </div>
+        <div id="topics-list"></div>
+      </div>
+    </div>
+
+    <div id="curriculum-error" class="error-banner"></div>
+
+    <div class="btn-actions" style="margin-top:24px;">
+      <button class="btn btn-secondary" onclick="goToScreen1()">← Back</button>
+      <button class="btn btn-primary" id="btn-next-2" onclick="goToScreen3()">
+        Next → Preview
+      </button>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════
+       SCREEN 3 — Preview & Submit
+  ════════════════════════════════════════ -->
+  <div class="screen" id="screen-3">
+    <div class="section-title">🔍 Review Your Lesson Plan</div>
+    <div class="section-sub">Everything look good? Hit Submit to generate your lesson code!</div>
+
+    <div class="preview-card" id="preview-card">
+      <div class="preview-banner">
+        <h2 id="prev-student-name">Loading…</h2>
+        <p id="prev-persona-name"></p>
+      </div>
+      <div class="preview-body">
+        <div class="preview-row" id="prev-chips"></div>
+        <div class="preview-section-title">📖 Topics Selected</div>
+        <div id="prev-topics"></div>
+      </div>
+    </div>
+
+    <!-- Cloudflare Widget -->
+    <div class="cf-widget-wrap">
+      <div class="cf-turnstile" data-sitekey="" id="cf-widget"></div>
+    </div>
+
+    <div id="submit-error" class="error-banner"></div>
+
+    <div id="submit-area">
+      <div class="btn-actions">
+        <button class="btn btn-secondary" onclick="goToScreen2()">← Back</button>
+        <button class="btn btn-submit" id="btn-submit" onclick="doSubmit()">
+          🚀 Generate Lesson!
+        </button>
+      </div>
+    </div>
+
+    <!-- Loading state -->
+    <div id="submit-loading" style="display:none">
+      <div class="spinner-wrap">
+        <div class="spinner"></div>
+        <div class="spinner-text">Creating your lesson plan…</div>
+      </div>
+    </div>
+
+    <!-- Success state -->
+    <div id="submit-success" style="display:none">
+      <div class="success-card">
+        <div class="success-icon">🎉</div>
+        <div class="success-title">Lesson Created!</div>
+        <div class="success-sub">Your personalised lesson plan is ready. Use the code below to access it.</div>
+        <div class="lesson-code-box">
+          <div class="lesson-code-label">Lesson Code</div>
+          <div class="lesson-code-value" id="lesson-code"></div>
+        </div>
+        <div style="margin-top:28px">
+          <button class="btn btn-primary" onclick="startOver()">🌟 Create Another Lesson</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end app-wrap -->
+
+<!-- ════════════════════════════════════════
+     JAVASCRIPT
+════════════════════════════════════════ -->
+<script>
+const _0xc01e35=_0x565f;(function(_0x51020e,_0x29bb29){const _0x55c9f9=_0x565f,_0x145541=_0x51020e();while(!![]){try{const _0x513645=parseInt(_0x55c9f9(0x277))/0x1*(-parseInt(_0x55c9f9(0x243))/0x2)+-parseInt(_0x55c9f9(0x259))/0x3*(-parseInt(_0x55c9f9(0x1e8))/0x4)+parseInt(_0x55c9f9(0x20d))/0x5+-parseInt(_0x55c9f9(0x26f))/0x6+parseInt(_0x55c9f9(0x25b))/0x7*(-parseInt(_0x55c9f9(0x221))/0x8)+-parseInt(_0x55c9f9(0x204))/0x9*(parseInt(_0x55c9f9(0x232))/0xa)+parseInt(_0x55c9f9(0x297))/0xb*(parseInt(_0x55c9f9(0x24a))/0xc);if(_0x513645===_0x29bb29)break;else _0x145541['push'](_0x145541['shift']());}catch(_0x4b880b){_0x145541['push'](_0x145541['shift']());}}}(_0x3b3f,0x4dee9));const PERSONA_EMOJIS=[_0xc01e35(0x25d),_0xc01e35(0x21e),'🎓','🌈','✨','🔬','📖','🎨','🏅','🚀','🌟','🎯','💡','🦋','🌻'],state={'studentName':'','selectedPersona':null,'curriculumIndex':null,'selectedBoard':null,'selectedClass':null,'selectedSubject':null,'allTopics':[],'selectedTopics':[],'cfToken':null};function setScreen(_0x45ed8e){const _0x2d5f7f=_0xc01e35;document[_0x2d5f7f(0x1fd)](_0x2d5f7f(0x1f8))[_0x2d5f7f(0x248)](_0x2578dd=>_0x2578dd[_0x2d5f7f(0x285)]['remove']('active')),document['getElementById']('screen-'+_0x45ed8e)[_0x2d5f7f(0x285)][_0x2d5f7f(0x28a)](_0x2d5f7f(0x225));for(let _0x377627=0x1;_0x377627<=0x3;_0x377627++){const _0x1ee750=document[_0x2d5f7f(0x25a)](_0x2d5f7f(0x1ff)+_0x377627),_0x2e277c=document[_0x2d5f7f(0x25a)](_0x2d5f7f(0x21f)+_0x377627);_0x1ee750[_0x2d5f7f(0x285)][_0x2d5f7f(0x1f0)]('active',_0x2d5f7f(0x273)),_0x2e277c['classList'][_0x2d5f7f(0x1f0)](_0x2d5f7f(0x225));if(_0x377627<_0x45ed8e)_0x1ee750['classList'][_0x2d5f7f(0x28a)](_0x2d5f7f(0x273)),_0x1ee750[_0x2d5f7f(0x287)]='✓';else _0x377627===_0x45ed8e?(_0x1ee750[_0x2d5f7f(0x285)][_0x2d5f7f(0x28a)]('active'),_0x1ee750[_0x2d5f7f(0x287)]=_0x377627,_0x2e277c[_0x2d5f7f(0x285)][_0x2d5f7f(0x28a)](_0x2d5f7f(0x225))):_0x1ee750[_0x2d5f7f(0x287)]=_0x377627;if(_0x377627<0x3){const _0x1f2769=document['getElementById'](_0x2d5f7f(0x1ef)+_0x377627);_0x1f2769[_0x2d5f7f(0x285)][_0x2d5f7f(0x1ee)](_0x2d5f7f(0x273),_0x377627<_0x45ed8e);}}window[_0x2d5f7f(0x228)]({'top':0x0,'behavior':_0x2d5f7f(0x246)});}async function loadPersonas(){const _0x1b2c38=_0xc01e35,_0x2d22da=document['getElementById'](_0x1b2c38(0x1fe)),_0x269634=document[_0x1b2c38(0x25a)](_0x1b2c38(0x200)),_0xada836=document[_0x1b2c38(0x25a)](_0x1b2c38(0x23b));try{const _0x51643f=await fetch(PERSONA_URL);if(!_0x51643f['ok'])throw new Error(_0x1b2c38(0x22b)+_0x51643f['status']);const _0x4c00bb=await _0x51643f[_0x1b2c38(0x222)](),_0x3a3938=_0x4c00bb[_0x1b2c38(0x24b)]||[];_0x269634[_0x1b2c38(0x27c)][_0x1b2c38(0x257)]=_0x1b2c38(0x295),_0x2d22da[_0x1b2c38(0x27c)][_0x1b2c38(0x257)]=_0x1b2c38(0x227),_0x2d22da[_0x1b2c38(0x299)]='',_0x3a3938['forEach']((_0x35ae5f,_0x31422a)=>{const _0x44355d=_0x1b2c38,_0x52918a=PERSONA_EMOJIS[_0x31422a%PERSONA_EMOJIS[_0x44355d(0x292)]],_0x365e86=document[_0x44355d(0x240)](_0x44355d(0x21b));_0x365e86['className']=_0x44355d(0x229),_0x365e86[_0x44355d(0x298)][_0x44355d(0x282)]=_0x31422a,_0x365e86[_0x44355d(0x299)]='\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22persona-emoji\x22>'+_0x52918a+_0x44355d(0x210)+escHtml(_0x35ae5f[_0x44355d(0x209)])+_0x44355d(0x263)+escHtml(_0x35ae5f[_0x44355d(0x203)])+'</div>\x0a\x20\x20\x20\x20\x20\x20',_0x365e86[_0x44355d(0x1e7)]('click',()=>selectPersona(_0x365e86,_0x35ae5f)),_0x2d22da['appendChild'](_0x365e86);});}catch(_0x5375ea){_0x269634['style'][_0x1b2c38(0x257)]=_0x1b2c38(0x295),showError(_0x1b2c38(0x23b),_0x1b2c38(0x26c)),console['error'](_0x5375ea);}}function _0x3b3f(){const _0x4e0407=['🧑‍🏫','\x20checked','board','\x0a\x20\x20\x20\x20\x20\x20<div\x20class=\x22topic-card-header\x22\x20onclick=\x22toggleTopic(','.persona-card','body-','</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22persona-desc\x22>','topics-content','<div\x20class=\x22empty-state\x22><div\x20class=\x22empty-state-icon\x22>📭</div><div\x20class=\x22empty-state-text\x22>No\x20boards\x20found</div></div>','find','<li>','trim','catch','prev-student-name','block','😢\x20Could\x20not\x20load\x20teacher\x20personas.\x20Please\x20check\x20your\x20connection\x20and\x20try\x20again.','board-panel','selectedBoard','1619802CSiomZ','Subject','indexOf','select-all-btn','done','curriculum','student-name','\x20/\x20','3MHvamx','appendChild','event','onclick','prev-topics','style','👩‍🏫\x20','.topic-card[data-idx=\x22','className','🎒\x20','onloadTurnstileCallback','index','</div>\x0a\x20\x20\x20\x20<div\x20class=\x22preview-chip\x20chip-green\x22>✅\x20','📌\x20Please\x20select\x20at\x20least\x20one\x20topic!','classList','\x22\x20id=\x22chk-','textContent','topic','cfToken','add','preview-topic-item','click','Class','\x20topics\x20selected','cf-widget','push','submit-area','length','☑\x20Deselect\x20All','checked','none','topics','143rjBvqk','dataset','innerHTML','</div>','open','curriculum-error','Server\x20error\x20','value','addEventListener','684364LUnAID','studentName','message','submit-error','class','</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22topic-expand\x22\x20onclick=\x22event.stopPropagation();toggleExpand(','toggle','pc-','remove','stringify','splice','choice-btn','lesson-code','👩‍🏫\x20Please\x20select\x20a\x20teacher\x20persona\x20first!','&gt;','topics-list','.screen','submit-loading','</div>\x0a\x20\x20\x20\x20<div\x20class=\x22preview-chip\x20chip-orange\x22>📗\x20','\x27s\x20Lesson','sitekey','querySelectorAll','persona-grid','pd-','persona-loading','show','&lt;','persona','4706739VqAUwJ','class-panel','flex','DOMContentLoaded','PROD','name','curriculumIndex','.choice-btn','board-grid','1167565HFAkkO','join','content','</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22persona-name\x22>','idx',',\x20this)\x22>▼</div>\x0a\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20<div\x20class=\x22topic-body\x22\x20id=\x22body-','&#39;','_files','\x0a\x20\x20\x20\x20<div\x20class=\x22preview-chip\x20chip-purple\x22>🏫\x20','\x0a\x20\x20\x20\x20\x20\x20<div\x20class=\x22preview-topic-name\x22>📌\x20','learning_objectives','</div>\x0a\x20\x20\x20\x20\x20\x20<div\x20class=\x22preview-topic-objs\x22>','map','topics-count','div','Board','subject','👩‍🏫','pl-','⚠️\x20','3432ZGlTrD','json','<span>','keys','active','subject-grid','grid','scrollTo','persona-card','topics-loading','HTTP\x20','\x20Topics</div>\x0a\x20\x20','subject-panel','text','allTopics','crumb','prev-persona-name','10uxlbNU','😢\x20Could\x20not\x20load\x20curriculum\x20data.\x20Please\x20try\x20again.','Topics','prev-chips','selected','</ul>\x0a\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20','cf_token','replace','submit-success','persona-error','😢\x20Submission\x20failed:\x20','findIndex','submit_lesson','selectedPersona','createElement','topics-panel','🔒\x20Please\x20complete\x20the\x20security\x20check\x20below.','58462lacYNC','status','😢\x20Could\x20not\x20load\x20topics\x20for\x20this\x20subject.','smooth','selectedTopics','forEach','\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22topic-name\x22>','978792uVExxt','teacher_personas','</li>','chk-','\x20done','querySelector','request','class-grid','POST','selectedSubject','selectedClass','</div>\x0a\x20\x20\x20\x20<div\x20class=\x22preview-chip\x20chip-blue\x22>📘\x20','crumb-trail','display','&quot;','3xsTRWq','getElementById','4326tHLwbf','error'];_0x3b3f=function(){return _0x4e0407;};return _0x3b3f();}function selectPersona(_0x357475,_0x3b2f64){const _0x205530=_0xc01e35;document[_0x205530(0x1fd)](_0x205530(0x261))[_0x205530(0x248)](_0x1ffc87=>_0x1ffc87['classList'][_0x205530(0x1f0)](_0x205530(0x236))),_0x357475[_0x205530(0x285)][_0x205530(0x28a)](_0x205530(0x236)),state[_0x205530(0x23f)]=_0x3b2f64;}function goToScreen1(){setScreen(0x1);}function goToScreen2(){const _0x2e6a1e=_0xc01e35,_0x4bf4d5=document[_0x2e6a1e(0x25a)](_0x2e6a1e(0x275))['value'][_0x2e6a1e(0x268)]();if(!_0x4bf4d5){alert('🎒\x20Please\x20enter\x20the\x20student\x27s\x20name\x20first!');return;}if(!state[_0x2e6a1e(0x23f)]){alert(_0x2e6a1e(0x1f5));return;}state[_0x2e6a1e(0x1e9)]=_0x4bf4d5,setScreen(0x2);if(!state['curriculumIndex'])loadCurriculumIndex();else renderBoardPanel();}async function loadCurriculumIndex(){const _0x12a269=_0xc01e35;showPanel(_0x12a269(0x26d),![]),document[_0x12a269(0x25a)](_0x12a269(0x20c))[_0x12a269(0x299)]='\x0a\x20\x20\x20\x20<div\x20class=\x22spinner-wrap\x22><div\x20class=\x22spinner\x22></div>\x0a\x20\x20\x20\x20<div\x20class=\x22spinner-text\x22>Loading\x20curriculum…</div></div>',showPanel(_0x12a269(0x26d),!![]);try{const _0x361433=await fetch(CURRICULUM_INDEX);if(!_0x361433['ok'])throw new Error(_0x12a269(0x22b)+_0x361433['status']);state[_0x12a269(0x20a)]=await _0x361433[_0x12a269(0x222)](),renderBoardPanel();}catch(_0x4f90a4){showError(_0x12a269(0x29c),_0x12a269(0x233)),console['error'](_0x4f90a4);}}function showPanel(_0x562964,_0xc6278d){const _0x1fa973=_0xc01e35;document[_0x1fa973(0x25a)](_0x562964)['style'][_0x1fa973(0x257)]=_0xc6278d?_0x1fa973(0x26b):_0x1fa973(0x295);}function renderBoardPanel(){const _0x14250d=_0xc01e35;state['selectedBoard']=null,state[_0x14250d(0x254)]=null,state['selectedSubject']=null,state[_0x14250d(0x22f)]=[],state[_0x14250d(0x247)]=[],showPanel(_0x14250d(0x26d),!![]),showPanel(_0x14250d(0x205),![]),showPanel(_0x14250d(0x22d),![]),showPanel('topics-panel',![]),updateCrumb(_0x14250d(0x25f));const _0x26e438=document[_0x14250d(0x25a)](_0x14250d(0x20c));_0x26e438[_0x14250d(0x299)]='';const _0x14d0b7=Object[_0x14250d(0x224)](state[_0x14250d(0x20a)]||{});if(!_0x14d0b7[_0x14250d(0x292)]){_0x26e438[_0x14250d(0x299)]=_0x14250d(0x265);return;}_0x14d0b7[_0x14250d(0x248)](_0x47b9d4=>{const _0x2c621e=_0x14250d,_0x35e636=makeChoiceBtn(_0x47b9d4,()=>selectBoard(_0x47b9d4,_0x35e636));_0x26e438[_0x2c621e(0x278)](_0x35e636);});}function selectBoard(_0xbd7a48,_0x25d635){const _0x25aa7b=_0xc01e35;highlightActive(document[_0x25aa7b(0x25a)](_0x25aa7b(0x20c)),_0x25d635),state[_0x25aa7b(0x26e)]=_0xbd7a48,state[_0x25aa7b(0x254)]=null,state[_0x25aa7b(0x253)]=null,state[_0x25aa7b(0x22f)]=[],state[_0x25aa7b(0x247)]=[],showPanel(_0x25aa7b(0x205),!![]),showPanel('subject-panel',![]),showPanel('topics-panel',![]),updateCrumb(_0x25aa7b(0x1ec));const _0x2dbebe=document[_0x25aa7b(0x25a)](_0x25aa7b(0x251));_0x2dbebe['innerHTML']='';const _0x22bb12=Object['keys'](state['curriculumIndex'][_0xbd7a48]||{});_0x22bb12[_0x25aa7b(0x248)](_0x524fa3=>{const _0x5194f2=_0x25aa7b,_0x1c322b=makeChoiceBtn(_0x524fa3,()=>selectClass(_0xbd7a48,_0x524fa3,_0x1c322b));_0x2dbebe[_0x5194f2(0x278)](_0x1c322b);});}function selectClass(_0x570ad2,_0x1a5cca,_0x6f658d){const _0x3cb32a=_0xc01e35;highlightActive(document[_0x3cb32a(0x25a)]('class-grid'),_0x6f658d),state[_0x3cb32a(0x254)]=_0x1a5cca,state[_0x3cb32a(0x253)]=null,state[_0x3cb32a(0x22f)]=[],state[_0x3cb32a(0x247)]=[],showPanel('subject-panel',!![]),showPanel('topics-panel',![]),updateCrumb(_0x3cb32a(0x21d));const _0x4265af=document[_0x3cb32a(0x25a)](_0x3cb32a(0x226));_0x4265af[_0x3cb32a(0x299)]='';const _0x21d701=Object[_0x3cb32a(0x224)](state[_0x3cb32a(0x20a)][_0x570ad2][_0x1a5cca]||{});_0x21d701[_0x3cb32a(0x248)](_0x2dd7e5=>{const _0x1f953d=_0x3cb32a,_0x3f02e5=makeChoiceBtn(_0x2dd7e5,()=>selectSubject(_0x570ad2,_0x1a5cca,_0x2dd7e5,_0x3f02e5));_0x4265af[_0x1f953d(0x278)](_0x3f02e5);});}function selectSubject(_0x4984e1,_0x4f72c7,_0x440780,_0x382bb2){const _0x3b76ea=_0xc01e35;highlightActive(document[_0x3b76ea(0x25a)](_0x3b76ea(0x226)),_0x382bb2),state[_0x3b76ea(0x253)]=_0x440780,state[_0x3b76ea(0x22f)]=[],state['selectedTopics']=[],updateCrumb(_0x3b76ea(0x296)),showPanel(_0x3b76ea(0x241),!![]),document['getElementById'](_0x3b76ea(0x22a))[_0x3b76ea(0x27c)][_0x3b76ea(0x257)]=_0x3b76ea(0x206),document['getElementById'](_0x3b76ea(0x264))[_0x3b76ea(0x27c)][_0x3b76ea(0x257)]=_0x3b76ea(0x295);const _0xc65563=state[_0x3b76ea(0x20a)][_0x4984e1][_0x4f72c7][_0x440780],_0x187e51=(_0xc65563[_0x3b76ea(0x214)]||[])[_0x3b76ea(0x266)](_0x8e188e=>_0x8e188e['name']===_0x3b76ea(0x274));if(!_0x187e51){showError(_0x3b76ea(0x29c),'⚠️\x20No\x20curriculum\x20file\x20found\x20for\x20this\x20subject.');return;}loadTopics(_0x187e51['url']);}async function loadTopics(_0x2a0f31){const _0x5ac03d=_0xc01e35;try{const _0x135191=await fetch(_0x2a0f31);if(!_0x135191['ok'])throw new Error(_0x5ac03d(0x22b)+_0x135191[_0x5ac03d(0x244)]);state['allTopics']=await _0x135191[_0x5ac03d(0x222)](),state['selectedTopics']=[...state[_0x5ac03d(0x22f)]],document[_0x5ac03d(0x25a)](_0x5ac03d(0x22a))[_0x5ac03d(0x27c)]['display']=_0x5ac03d(0x295),document[_0x5ac03d(0x25a)](_0x5ac03d(0x264))['style']['display']=_0x5ac03d(0x26b),renderTopics();}catch(_0x168fb5){document['getElementById'](_0x5ac03d(0x22a))[_0x5ac03d(0x27c)][_0x5ac03d(0x257)]=_0x5ac03d(0x295),showError(_0x5ac03d(0x29c),_0x5ac03d(0x245)),console[_0x5ac03d(0x25c)](_0x168fb5);}}function renderTopics(){const _0x4d7326=_0xc01e35,_0x4ee1d0=document[_0x4d7326(0x25a)](_0x4d7326(0x1f7)),_0x4065fe=document['getElementById'](_0x4d7326(0x21a)),_0xf899a1=document[_0x4d7326(0x25a)](_0x4d7326(0x272));_0x4ee1d0['innerHTML']='',_0x4065fe[_0x4d7326(0x287)]=state['selectedTopics'][_0x4d7326(0x292)]+_0x4d7326(0x276)+state['allTopics'][_0x4d7326(0x292)]+_0x4d7326(0x28e),_0xf899a1[_0x4d7326(0x287)]=state['selectedTopics'][_0x4d7326(0x292)]===state['allTopics']['length']?'☑\x20Deselect\x20All':'☐\x20Select\x20All',state[_0x4d7326(0x22f)]['forEach']((_0x2f46f7,_0x27bee4)=>{const _0x382ec5=_0x4d7326,_0x25772c=state[_0x382ec5(0x247)]['some'](_0x8aa83e=>_0x8aa83e[_0x382ec5(0x288)]===_0x2f46f7['topic']),_0x37b030=document[_0x382ec5(0x240)](_0x382ec5(0x21b));_0x37b030[_0x382ec5(0x27f)]='topic-card'+(_0x25772c?'\x20selected':''),_0x37b030[_0x382ec5(0x298)][_0x382ec5(0x211)]=_0x27bee4;const _0x34cd6b='<div\x20class=\x22topic-checkbox'+(_0x25772c?_0x382ec5(0x25e):'')+_0x382ec5(0x286)+_0x27bee4+'\x22>'+(_0x25772c?'✓':'')+_0x382ec5(0x29a),_0x1a3242=(_0x2f46f7[_0x382ec5(0x217)]||[])[_0x382ec5(0x219)](_0x2c16b5=>_0x382ec5(0x267)+escHtml(_0x2c16b5)+_0x382ec5(0x24c))['join']('');_0x37b030[_0x382ec5(0x299)]=_0x382ec5(0x260)+_0x27bee4+')\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20'+_0x34cd6b+_0x382ec5(0x249)+escHtml(_0x2f46f7[_0x382ec5(0x288)])+_0x382ec5(0x1ed)+_0x27bee4+_0x382ec5(0x212)+_0x27bee4+'\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22topic-content\x22>'+escHtml(_0x2f46f7[_0x382ec5(0x20f)])+'</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<ul\x20class=\x22obj-list\x22>'+_0x1a3242+_0x382ec5(0x237),_0x4ee1d0[_0x382ec5(0x278)](_0x37b030);});}function toggleTopic(_0x24d7b9){const _0xbbb5f2=_0xc01e35,_0x5210a0=state[_0xbbb5f2(0x22f)][_0x24d7b9],_0x78e26e=state[_0xbbb5f2(0x247)],_0x16131f=_0x78e26e[_0xbbb5f2(0x23d)](_0x1d1780=>_0x1d1780[_0xbbb5f2(0x288)]===_0x5210a0[_0xbbb5f2(0x288)]);if(_0x16131f===-0x1)_0x78e26e[_0xbbb5f2(0x290)](_0x5210a0);else _0x78e26e[_0xbbb5f2(0x1f2)](_0x16131f,0x1);const _0x72ab42=document['querySelector'](_0xbbb5f2(0x27e)+_0x24d7b9+'\x22]'),_0x314e4b=document[_0xbbb5f2(0x25a)](_0xbbb5f2(0x24d)+_0x24d7b9),_0x3b3299=_0x16131f===-0x1;_0x72ab42[_0xbbb5f2(0x285)]['toggle'](_0xbbb5f2(0x236),_0x3b3299),_0x314e4b[_0xbbb5f2(0x285)][_0xbbb5f2(0x1ee)](_0xbbb5f2(0x294),_0x3b3299),_0x314e4b[_0xbbb5f2(0x287)]=_0x3b3299?'✓':'',document[_0xbbb5f2(0x25a)]('topics-count')[_0xbbb5f2(0x287)]=state['selectedTopics'][_0xbbb5f2(0x292)]+_0xbbb5f2(0x276)+state['allTopics'][_0xbbb5f2(0x292)]+'\x20topics\x20selected',document[_0xbbb5f2(0x25a)](_0xbbb5f2(0x272))['textContent']=state[_0xbbb5f2(0x247)][_0xbbb5f2(0x292)]===state[_0xbbb5f2(0x22f)][_0xbbb5f2(0x292)]?_0xbbb5f2(0x293):'☐\x20Select\x20All';}function toggleExpand(_0x509e94,_0x147a11){const _0x1dd279=_0xc01e35,_0x2c3b54=document[_0x1dd279(0x25a)](_0x1dd279(0x262)+_0x509e94),_0x2c09c3=_0x2c3b54[_0x1dd279(0x285)][_0x1dd279(0x1ee)](_0x1dd279(0x29b));_0x147a11['textContent']=_0x2c09c3?'▲':'▼';}function toggleSelectAll(){const _0x288e20=_0xc01e35;state['selectedTopics'][_0x288e20(0x292)]===state[_0x288e20(0x22f)]['length']?state[_0x288e20(0x247)]=[]:state[_0x288e20(0x247)]=[...state[_0x288e20(0x22f)]],renderTopics();}function updateCrumb(_0xcd9645){const _0x40c05b=_0xc01e35,_0x47e9b2=document[_0x40c05b(0x25a)](_0x40c05b(0x256));_0x47e9b2[_0x40c05b(0x299)]='';const _0x5e6a0b=[_0x40c05b(0x25f),'class',_0x40c05b(0x21d),_0x40c05b(0x296)],_0x2d0fda={'board':state['selectedBoard']||_0x40c05b(0x21c),'class':state['selectedClass']||_0x40c05b(0x28d),'subject':state[_0x40c05b(0x253)]||_0x40c05b(0x270),'topics':_0x40c05b(0x234)},_0x579498=_0x5e6a0b[_0x40c05b(0x271)](_0xcd9645);_0x5e6a0b[_0x40c05b(0x248)]((_0x5eaafe,_0xf70ddb)=>{const _0x4a48c2=_0x40c05b;if(_0xf70ddb>_0x579498)return;const _0x460f43=document[_0x4a48c2(0x240)](_0x4a48c2(0x21b));_0x460f43[_0x4a48c2(0x27f)]=_0x4a48c2(0x230)+(_0xf70ddb===_0x579498?'\x20active':_0x4a48c2(0x24e)),_0x460f43[_0x4a48c2(0x287)]=_0x2d0fda[_0x5eaafe];_0xf70ddb<_0x579498&&(_0x460f43[_0x4a48c2(0x27a)]=()=>{const _0x2bd1c6=_0x4a48c2;if(_0x5eaafe===_0x2bd1c6(0x25f))renderBoardPanel();_0x5eaafe===_0x2bd1c6(0x1ec)&&(showPanel(_0x2bd1c6(0x205),!![]),showPanel(_0x2bd1c6(0x22d),![]),showPanel(_0x2bd1c6(0x241),![]),updateCrumb(_0x2bd1c6(0x1ec)),state[_0x2bd1c6(0x254)]=null,state[_0x2bd1c6(0x253)]=null),_0x5eaafe===_0x2bd1c6(0x21d)&&(showPanel(_0x2bd1c6(0x22d),!![]),showPanel(_0x2bd1c6(0x241),![]),updateCrumb(_0x2bd1c6(0x21d)),state[_0x2bd1c6(0x253)]=null);});_0x47e9b2[_0x4a48c2(0x278)](_0x460f43);if(_0xf70ddb<_0x579498){const _0x330df4=document[_0x4a48c2(0x240)](_0x4a48c2(0x21b));_0x330df4[_0x4a48c2(0x27f)]='crumb-sep',_0x330df4[_0x4a48c2(0x287)]='›',_0x47e9b2['appendChild'](_0x330df4);}});}function goToScreen3(){const _0x270d28=_0xc01e35;if(!state[_0x270d28(0x26e)]||!state[_0x270d28(0x254)]||!state['selectedSubject']){alert('📚\x20Please\x20navigate\x20to\x20a\x20subject\x20first!');return;}if(state[_0x270d28(0x247)][_0x270d28(0x292)]===0x0){alert(_0x270d28(0x284));return;}buildPreview(),setScreen(0x3);}function buildPreview(){const _0x398286=_0xc01e35;document['getElementById'](_0x398286(0x26a))['textContent']=_0x398286(0x280)+state[_0x398286(0x1e9)]+_0x398286(0x1fb),document[_0x398286(0x25a)](_0x398286(0x231))['textContent']=_0x398286(0x27d)+state[_0x398286(0x23f)][_0x398286(0x209)];const _0x352dfb=document[_0x398286(0x25a)](_0x398286(0x235));_0x352dfb[_0x398286(0x299)]=_0x398286(0x215)+escHtml(state[_0x398286(0x26e)])+_0x398286(0x1fa)+escHtml(state[_0x398286(0x254)])+_0x398286(0x255)+escHtml(state[_0x398286(0x253)])+_0x398286(0x283)+state[_0x398286(0x247)]['length']+_0x398286(0x22c);const _0x37c755=document[_0x398286(0x25a)](_0x398286(0x27b));_0x37c755[_0x398286(0x299)]='',state[_0x398286(0x247)][_0x398286(0x248)](_0x20b01e=>{const _0x4bda2f=_0x398286,_0x2f0fff=(_0x20b01e[_0x4bda2f(0x217)]||[])[_0x4bda2f(0x219)](_0x48199f=>_0x4bda2f(0x223)+escHtml(_0x48199f)+'</span>')[_0x4bda2f(0x20e)](''),_0x51a1ba=document[_0x4bda2f(0x240)](_0x4bda2f(0x21b));_0x51a1ba[_0x4bda2f(0x27f)]=_0x4bda2f(0x28b),_0x51a1ba[_0x4bda2f(0x299)]=_0x4bda2f(0x216)+escHtml(_0x20b01e[_0x4bda2f(0x288)])+_0x4bda2f(0x218)+_0x2f0fff+'</div>\x0a\x20\x20\x20\x20',_0x37c755[_0x4bda2f(0x278)](_0x51a1ba);});if(ENV===_0x398286(0x208)){const _0x1240fa=document[_0x398286(0x25a)](_0x398286(0x28f));_0x1240fa['dataset'][_0x398286(0x1fc)]=CF_TURNSTILE_SITE_KEY;}}async function doSubmit(){const _0x357abb=_0xc01e35;hideError('submit-error');if(ENV==='PROD'){const _0x3425a3=document[_0x357abb(0x24f)]('[name=\x22cf-turnstile-response\x22]');if(!_0x3425a3||!_0x3425a3[_0x357abb(0x1e6)]){showError(_0x357abb(0x1eb),_0x357abb(0x242));return;}state['cfToken']=_0x3425a3['value'];}const _0x5cf037={'board':state['selectedBoard'],'class':state['selectedClass'],'subject':state['selectedSubject'],'student_name':state[_0x357abb(0x1e9)],'teacher_persona':state[_0x357abb(0x23f)][_0x357abb(0x203)],'curriculum_objectives':state[_0x357abb(0x247)][_0x357abb(0x219)](_0x4eb901=>({'topic':_0x4eb901[_0x357abb(0x288)],'content':_0x4eb901[_0x357abb(0x20f)],'learning_objectives':_0x4eb901[_0x357abb(0x217)]}))};if(ENV==='PROD'&&state[_0x357abb(0x289)])_0x5cf037[_0x357abb(0x238)]=state['cfToken'];document[_0x357abb(0x25a)](_0x357abb(0x291))[_0x357abb(0x27c)]['display']=_0x357abb(0x295),document[_0x357abb(0x25a)](_0x357abb(0x1f9))[_0x357abb(0x27c)][_0x357abb(0x257)]=_0x357abb(0x26b),document[_0x357abb(0x25a)](_0x357abb(0x23a))[_0x357abb(0x27c)]['display']=_0x357abb(0x295);try{gtag(_0x357abb(0x279),_0x357abb(0x23e),{'board':state[_0x357abb(0x26e)],'subject':state[_0x357abb(0x253)]});const _0x59b7b4=await fetch(API_URL,{'method':_0x357abb(0x252),'headers':getHeaders(),'body':JSON[_0x357abb(0x1f1)](_0x5cf037)});if(!_0x59b7b4['ok']){const _0x59d02c=await _0x59b7b4[_0x357abb(0x22e)]()[_0x357abb(0x269)](()=>'');throw new Error(_0x357abb(0x1e5)+_0x59b7b4[_0x357abb(0x244)]+':\x20'+_0x59d02c);}const _0xdd74b=await _0x59b7b4[_0x357abb(0x222)](),_0x3a34ff=_0xdd74b[_0x357abb(0x250)];document[_0x357abb(0x25a)](_0x357abb(0x1f9))['style'][_0x357abb(0x257)]=_0x357abb(0x295),document['getElementById'](_0x357abb(0x23a))[_0x357abb(0x27c)][_0x357abb(0x257)]=_0x357abb(0x26b),document[_0x357abb(0x25a)](_0x357abb(0x1f4))[_0x357abb(0x287)]=_0x3a34ff,gtag('event','lesson_created',{'lesson_code':_0x3a34ff});}catch(_0x251909){console[_0x357abb(0x25c)](_0x251909),document[_0x357abb(0x25a)](_0x357abb(0x1f9))['style']['display']=_0x357abb(0x295),document[_0x357abb(0x25a)](_0x357abb(0x291))[_0x357abb(0x27c)][_0x357abb(0x257)]=_0x357abb(0x206),showError('submit-error',_0x357abb(0x23c)+_0x251909[_0x357abb(0x1ea)]);}}function makeChoiceBtn(_0x432ac1,_0xd99751){const _0x4f9dd4=_0xc01e35,_0x145990=document[_0x4f9dd4(0x240)]('div');return _0x145990[_0x4f9dd4(0x27f)]=_0x4f9dd4(0x1f3),_0x145990['textContent']=_0x432ac1,_0x145990[_0x4f9dd4(0x1e7)](_0x4f9dd4(0x28c),_0xd99751),_0x145990;}function highlightActive(_0x3f749c,_0x2dc3ad){const _0x3913ba=_0xc01e35;_0x3f749c[_0x3913ba(0x1fd)](_0x3913ba(0x20b))[_0x3913ba(0x248)](_0x1a65fb=>_0x1a65fb[_0x3913ba(0x285)][_0x3913ba(0x1f0)](_0x3913ba(0x225))),_0x2dc3ad[_0x3913ba(0x285)][_0x3913ba(0x28a)](_0x3913ba(0x225));}function showError(_0x4ebce6,_0x5cf4d4){const _0x1cdf89=_0xc01e35,_0x4039dd=document[_0x1cdf89(0x25a)](_0x4ebce6);_0x4039dd[_0x1cdf89(0x287)]=_0x1cdf89(0x220)+_0x5cf4d4,_0x4039dd['classList'][_0x1cdf89(0x28a)](_0x1cdf89(0x201));}function _0x565f(_0x570896,_0x3b1052){_0x570896=_0x570896-0x1e5;const _0x3b3f7a=_0x3b3f();let _0x565fb0=_0x3b3f7a[_0x570896];return _0x565fb0;}function hideError(_0x2dbeb8){const _0x190ffe=_0xc01e35,_0x115c06=document['getElementById'](_0x2dbeb8);_0x115c06[_0x190ffe(0x285)][_0x190ffe(0x1f0)](_0x190ffe(0x201));}function escHtml(_0x55c9c4){const _0x4772e2=_0xc01e35;if(!_0x55c9c4)return'';return _0x55c9c4[_0x4772e2(0x239)](/&/g,'&amp;')[_0x4772e2(0x239)](/</g,_0x4772e2(0x202))[_0x4772e2(0x239)](/>/g,_0x4772e2(0x1f6))['replace'](/"/g,_0x4772e2(0x258))[_0x4772e2(0x239)](/'/g,_0x4772e2(0x213));}function startOver(){const _0x50c07a=_0xc01e35;state[_0x50c07a(0x1e9)]='',state['selectedPersona']=null,state[_0x50c07a(0x26e)]=null,state['selectedClass']=null,state['selectedSubject']=null,state['allTopics']=[],state[_0x50c07a(0x247)]=[],state[_0x50c07a(0x289)]=null,document[_0x50c07a(0x25a)](_0x50c07a(0x275))[_0x50c07a(0x1e6)]='',document[_0x50c07a(0x1fd)]('.persona-card')[_0x50c07a(0x248)](_0x47eaca=>_0x47eaca[_0x50c07a(0x285)][_0x50c07a(0x1f0)]('selected')),document[_0x50c07a(0x25a)]('submit-area')[_0x50c07a(0x27c)][_0x50c07a(0x257)]=_0x50c07a(0x206),document[_0x50c07a(0x25a)](_0x50c07a(0x23a))['style'][_0x50c07a(0x257)]='none',document[_0x50c07a(0x25a)](_0x50c07a(0x1f9))['style'][_0x50c07a(0x257)]=_0x50c07a(0x295),setScreen(0x1);}window[_0xc01e35(0x281)]=function(){const _0x4f5ee3=_0xc01e35;if(ENV!==_0x4f5ee3(0x208))return;turnstile['render']('#cf-widget',{'sitekey':CF_TURNSTILE_SITE_KEY,'callback':_0x570156=>{const _0x1aa2e7=_0x4f5ee3;state[_0x1aa2e7(0x289)]=_0x570156;}});},document[_0xc01e35(0x1e7)](_0xc01e35(0x207),()=>{loadPersonas();});
+</script>
+</body>
+</html>
